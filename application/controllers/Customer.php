@@ -1,5 +1,7 @@
 <?php
-class Home extends CI_Controller
+defined('BASEPATH') or exit('No direct script access allowed');
+
+class Customer extends CI_Controller
 {
 
     function __construct()
@@ -17,18 +19,13 @@ class Home extends CI_Controller
 
 
 
-    public function index()
+    public function register()
     {
         $this->load->view('templates/header');
         $this->load->view('templates/sidebar');
-		$this->load->view('portal/index.php');
-		$this->load->view('templates/footer');    
-           
+		$this->load->view('customer/register');
+		$this->load->view('templates/footer');  
     }
+  
 
-
-
-
-
-    
 }
