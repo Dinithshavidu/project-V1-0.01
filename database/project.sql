@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 01, 2023 at 07:44 PM
+-- Generation Time: Jan 02, 2023 at 03:12 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -20,6 +20,131 @@ SET time_zone = "+00:00";
 --
 -- Database: `project`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `appointment`
+--
+
+CREATE TABLE `appointment` (
+  `ap_id` int(11) NOT NULL,
+  `ap_cust_no` text NOT NULL,
+  `ap_service_type` int(11) NOT NULL,
+  `ap_job_id` int(11) NOT NULL,
+  `ap_treatment` int(11) NOT NULL,
+  `ap_date` date NOT NULL,
+  `ap_alocate_time` int(11) NOT NULL,
+  `ap_note` int(11) NOT NULL,
+  `ap_active` int(11) NOT NULL,
+  `ap_emp_cr_id` int(11) NOT NULL,
+  `ap_emp_up_id` int(11) NOT NULL,
+  `ap_is_complete` int(11) NOT NULL,
+  `ap_created_at` date NOT NULL,
+  `ap_updated_at` date NOT NULL,
+  `ap_section` int(11) NOT NULL,
+  `ap_emp_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `consultation`
+--
+
+CREATE TABLE `consultation` (
+  `ap_cs_id` int(11) NOT NULL,
+  `ap_cs_cust_no` text NOT NULL,
+  `ap_cs_service_type` int(11) NOT NULL,
+  `ap_cs_job_id` int(11) NOT NULL,
+  `ap_cs_treatment` int(11) NOT NULL,
+  `ap_cs_date` date NOT NULL,
+  `ap_cs_alocate_time` int(11) NOT NULL,
+  `ap_cs_note` text NOT NULL,
+  `ap_cs_active` int(11) NOT NULL,
+  `ap_cs_emp_cr_id` int(11) NOT NULL,
+  `ap_cs_emp_up_id` int(11) NOT NULL,
+  `ap_cs_is_complete` int(11) NOT NULL,
+  `ap_cs_created_at` date NOT NULL,
+  `ap_cs_updated_at` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customers`
+--
+
+CREATE TABLE `customers` (
+  `cust_id` int(11) NOT NULL,
+  `cust_dob` text NOT NULL,
+  `cust_address` text NOT NULL,
+  `cus_no` text NOT NULL,
+  `cust_weight` text NOT NULL,
+  `cust_hight` text NOT NULL,
+  `cust_city` text NOT NULL,
+  `cust_active` int(11) NOT NULL,
+  `cust_note` text NOT NULL,
+  `cust_up_emp_id` int(11) NOT NULL,
+  `cust_cr_emp_id` int(11) NOT NULL,
+  `cust_created_at` date NOT NULL,
+  `cust_updated_at` date NOT NULL,
+  `cust_name` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `job`
+--
+
+CREATE TABLE `job` (
+  `job_id` int(11) NOT NULL,
+  `job_created_at` date NOT NULL,
+  `job_is_complete` int(11) NOT NULL,
+  `job_is_active` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sections`
+--
+
+CREATE TABLE `sections` (
+  `sec_id` int(11) NOT NULL,
+  `sec_name` int(11) NOT NULL,
+  `sec_note` int(11) NOT NULL,
+  `sec_create_at` date NOT NULL,
+  `sec_active` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `services`
+--
+
+CREATE TABLE `services` (
+  `sr_name` text NOT NULL,
+  `sr_sec_id` int(11) NOT NULL,
+  `sr_id` int(11) NOT NULL,
+  `sr_create_at` date NOT NULL,
+  `sr_active` int(11) NOT NULL,
+  `sr_note` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `time_slots`
+--
+
+CREATE TABLE `time_slots` (
+  `tm_id` int(11) NOT NULL,
+  `tm_active` int(11) NOT NULL,
+  `tm_name` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -83,6 +208,42 @@ INSERT INTO `users` (`user_id`, `user_name`, `user_password`, `user_date`, `user
 --
 
 --
+-- Indexes for table `appointment`
+--
+ALTER TABLE `appointment`
+  ADD PRIMARY KEY (`ap_id`);
+
+--
+-- Indexes for table `consultation`
+--
+ALTER TABLE `consultation`
+  ADD PRIMARY KEY (`ap_cs_id`);
+
+--
+-- Indexes for table `job`
+--
+ALTER TABLE `job`
+  ADD PRIMARY KEY (`job_id`);
+
+--
+-- Indexes for table `sections`
+--
+ALTER TABLE `sections`
+  ADD PRIMARY KEY (`sec_id`);
+
+--
+-- Indexes for table `services`
+--
+ALTER TABLE `services`
+  ADD PRIMARY KEY (`sr_id`);
+
+--
+-- Indexes for table `time_slots`
+--
+ALTER TABLE `time_slots`
+  ADD PRIMARY KEY (`tm_id`);
+
+--
 -- Indexes for table `userroles`
 --
 ALTER TABLE `userroles`
@@ -97,6 +258,42 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `appointment`
+--
+ALTER TABLE `appointment`
+  MODIFY `ap_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `consultation`
+--
+ALTER TABLE `consultation`
+  MODIFY `ap_cs_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `job`
+--
+ALTER TABLE `job`
+  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `sections`
+--
+ALTER TABLE `sections`
+  MODIFY `sec_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `services`
+--
+ALTER TABLE `services`
+  MODIFY `sr_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `time_slots`
+--
+ALTER TABLE `time_slots`
+  MODIFY `tm_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `userroles`

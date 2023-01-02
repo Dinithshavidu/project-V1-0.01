@@ -8,7 +8,6 @@ class User extends CI_Controller
     {
         parent::__construct();
 
-
         if ($this->session->userdata('admin')) {
         } else if ($this->session->userdata('admin22')) {
         } else {
@@ -22,7 +21,6 @@ class User extends CI_Controller
         $this->load->view('templates/sidebar');
 		$this->load->view('setup/section');
 		$this->load->view('templates/footer');  
+    
     }
-  
-
 }
