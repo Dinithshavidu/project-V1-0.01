@@ -60,6 +60,31 @@
               
             </ul>
           </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                Option
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?php echo base_url();?>setup/sections" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Section</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?php echo base_url();?>setup/services" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Service</p>
+                </a>
+              </li>
+              
+            </ul>
+          </li>
           
           
         </ul>

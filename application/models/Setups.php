@@ -13,18 +13,18 @@ class Setups extends CI_Model
 		$sec_name = "";
 		$sec_note = "";
 		$sec_create_at = "";
-		$sec_active = "";
+		$sec_active =  1;
 		
 	   $sec_name  = $this->input->post('sec_name');
 	   $sec_note  = $this->input->post('sec_note');
-	   $sec_create_at  = $this->input->post('sec_create_at');
-	   $sec_active  = $this->input->post('sec_active');
+	//    $sec_create_at  = $this->input->post('sec_create_at');
+	   
        
        $insert_to_sections = array(
 
             'sec_name' => $sec_name,
             'sec_note' => $sec_note, 
-            'sec_create_at' => $sec_create_at,
+            // 'sec_create_at' => $sec_create_at,
             'sec_active' => $sec_active,
                );
         
@@ -40,20 +40,20 @@ class Setups extends CI_Model
 		$sr_name = "";
 		$sr_note = "";
 		$sr_create_at = "";
-		$sr_active = "";
+		$sr_active = 1;
         $sr_sec_id = "";
 		
 	   $sr_name  = $this->input->post('sr_name');
 	   $sr_note  = $this->input->post('sr_note');
-	   $sr_create_at  = $this->input->post('sr_create_at');
-	   $sr_active  = $this->input->post('sr_active');
+	//    $sr_create_at  = $this->input->post('sr_create_at');
+	//    $sr_active  = $this->input->post('sr_active');
        $sr_sec_id  = $this->input->post('sr_sec_id');
        
        $insert_to_services = array(
 
             'sr_name' => $sr_name,
             'sr_note' => $sr_note, 
-            'sr_create_at' => $sr_create_at,
+            // 'sr_create_at' => $sr_create_at,
             'sr_active' => $sr_active,
             'sr_sec_id' => $sr_sec_id,
                );
@@ -88,6 +88,15 @@ class Setups extends CI_Model
             return true;
 
 	}
+
+    public function retrieveSections()
+    {
+        return $this->db->select('*')->from('sections')->get()->result();
+    }
+	public function retrieveServices()
+    {
+        return $this->db->select('*')->from('services')->join('sections', 'services.sr_sec_id = sections.sec_id')->get()->result();
+    }
 	
 
 }

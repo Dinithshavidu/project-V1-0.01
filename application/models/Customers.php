@@ -11,12 +11,12 @@ class Customers extends CI_Model
 		$cust_weight = "";
 		$cust_hight = "";
 		$cust_city = "";
-		$cust_active = "";
+		$cust_active = 1;
 		$cust_note = "";
         $cust_cr_emp_id = "";
         $cust_up_emp_id = "";
         $cust_time = "";	
-		
+
 	   $cust_name  = $this->input->post('cust_name');
 	   $cust_dob  = $this->input->post('cust_dob');
 	   $cust_address  = $this->input->post('cust_address');
@@ -24,7 +24,7 @@ class Customers extends CI_Model
 	   $cust_weight  = $this->input->post('cust_weight');
 	   $cust_hight  = $this->input->post('cust_hight');
 	   $cust_city  = $this->input->post('cust_city');
-	   $cust_active  = $this->input->post('cust_active');
+	  
 	   $cust_note  = $this->input->post('cust_note');
 	   $cust_up_emp_id  = $this->input->post('cust_up_emp_id');
 	   $cust_cr_emp_id  = $this->input->post('cust_cr_emp_id');

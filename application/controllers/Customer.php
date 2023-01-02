@@ -23,6 +23,20 @@ class Customer extends CI_Controller
 		$this->load->view('customer/register');
 		$this->load->view('templates/footer');  
     }
+
+    function newcustomerinsert()
+
+    {
+
+        if (isset($_POST['addnew_customer'])) {
+
+            $this->load->model('customers');
+            $check = $this->customers->new_customer_insert();
+
+            redirect('customer/register');
+            
+        }
+    }
   
 
 }

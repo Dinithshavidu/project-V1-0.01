@@ -1,7 +1,6 @@
 <?php
 class Appointments extends CI_Model
-{
-    
+{   
  
 	
 	public function new_consultation_insert(){
