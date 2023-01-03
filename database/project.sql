@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 02, 2023 at 03:12 PM
+-- Generation Time: Jan 03, 2023 at 10:37 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -77,20 +77,30 @@ CREATE TABLE `consultation` (
 
 CREATE TABLE `customers` (
   `cust_id` int(11) NOT NULL,
-  `cust_dob` text NOT NULL,
-  `cust_address` text NOT NULL,
+  `cust_dob` text DEFAULT NULL,
+  `cust_address` text DEFAULT NULL,
   `cus_no` text NOT NULL,
-  `cust_weight` text NOT NULL,
-  `cust_hight` text NOT NULL,
-  `cust_city` text NOT NULL,
-  `cust_active` int(11) NOT NULL,
-  `cust_note` text NOT NULL,
-  `cust_up_emp_id` int(11) NOT NULL,
-  `cust_cr_emp_id` int(11) NOT NULL,
-  `cust_created_at` date NOT NULL,
-  `cust_updated_at` date NOT NULL,
+  `cust_weight` text DEFAULT NULL,
+  `cust_hight` text DEFAULT NULL,
+  `cust_city` text DEFAULT NULL,
+  `cust_active` int(11) DEFAULT 1,
+  `cust_note` text DEFAULT NULL,
+  `cust_up_emp_id` int(11) DEFAULT NULL,
+  `cust_cr_emp_id` int(11) DEFAULT NULL,
+  `cust_created_at` date DEFAULT current_timestamp(),
+  `cust_updated_at` date DEFAULT NULL,
   `cust_name` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`cust_id`, `cust_dob`, `cust_address`, `cus_no`, `cust_weight`, `cust_hight`, `cust_city`, `cust_active`, `cust_note`, `cust_up_emp_id`, `cust_cr_emp_id`, `cust_created_at`, `cust_updated_at`, `cust_name`) VALUES
+(1, '2023-01-13', 'ss', '+94715723199', NULL, NULL, 'dinithshavidu56@gmail.com', NULL, 'ssssss', NULL, NULL, NULL, NULL, 'ssssss'),
+(2, '2023-02-03', 'ssssss', '+94715723199', NULL, NULL, 'dinithshavidu56@gmail.com', NULL, 'ssssssssssssss', NULL, NULL, NULL, NULL, 'dd'),
+(3, '2023-01-21', 'ssssss', '0715723199', NULL, NULL, 'dinithshavidu56@gmail.com', NULL, 'sssssss', NULL, NULL, NULL, NULL, 'MALAVIKANKANAMGE DINITH SHAVIDU KITHSIRI'),
+(4, '2023-01-27', 'sssssss', '0715723199', NULL, NULL, 'dinithshavidu56@gmail.com', 1, 'sssssssss', NULL, NULL, NULL, NULL, 'MALAVIKANKANAMGE DINITH SHAVIDU KITHSIRI');
 
 -- --------------------------------------------------------
 
@@ -113,11 +123,21 @@ CREATE TABLE `job` (
 
 CREATE TABLE `sections` (
   `sec_id` int(11) NOT NULL,
-  `sec_name` int(11) NOT NULL,
-  `sec_note` int(11) NOT NULL,
-  `sec_create_at` date NOT NULL,
+  `sec_name` text NOT NULL,
+  `sec_note` text NOT NULL,
+  `sec_create_at` datetime NOT NULL DEFAULT current_timestamp(),
   `sec_active` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sections`
+--
+
+INSERT INTO `sections` (`sec_id`, `sec_name`, `sec_note`, `sec_create_at`, `sec_active`) VALUES
+(1, '0', '0', '2023-01-02 00:00:00', 1),
+(2, 'ds', 'ds', '2023-01-02 00:00:00', 1),
+(3, 'ds', '55', '2023-01-02 00:00:00', 1),
+(4, 'xxx', 'xxxxxxxxxxxxxxxxxx', '2023-01-02 22:10:14', 1);
 
 -- --------------------------------------------------------
 
@@ -129,10 +149,17 @@ CREATE TABLE `services` (
   `sr_name` text NOT NULL,
   `sr_sec_id` int(11) NOT NULL,
   `sr_id` int(11) NOT NULL,
-  `sr_create_at` date NOT NULL,
+  `sr_create_at` datetime NOT NULL DEFAULT current_timestamp(),
   `sr_active` int(11) NOT NULL,
   `sr_note` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `services`
+--
+
+INSERT INTO `services` (`sr_name`, `sr_sec_id`, `sr_id`, `sr_create_at`, `sr_active`, `sr_note`) VALUES
+('sss', 3, 1, '2023-01-02 22:14:18', 1, 'ssss');
 
 -- --------------------------------------------------------
 
@@ -220,6 +247,12 @@ ALTER TABLE `consultation`
   ADD PRIMARY KEY (`ap_cs_id`);
 
 --
+-- Indexes for table `customers`
+--
+ALTER TABLE `customers`
+  ADD PRIMARY KEY (`cust_id`);
+
+--
 -- Indexes for table `job`
 --
 ALTER TABLE `job`
@@ -272,6 +305,12 @@ ALTER TABLE `consultation`
   MODIFY `ap_cs_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `customers`
+--
+ALTER TABLE `customers`
+  MODIFY `cust_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `job`
 --
 ALTER TABLE `job`
@@ -281,13 +320,13 @@ ALTER TABLE `job`
 -- AUTO_INCREMENT for table `sections`
 --
 ALTER TABLE `sections`
-  MODIFY `sec_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `sec_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `sr_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `sr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `time_slots`
