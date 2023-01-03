@@ -2,12 +2,7 @@
 class Setups extends CI_Model
 {
     
-    public function popupbox() {
-		echo ' <script > ';
-		echo ' alert("Hello\nHow are you?"); ';
-		echo '</script>';
-	}
-	
+   	
 	public function new_section_insert(){
 
 		$sec_name = "";
