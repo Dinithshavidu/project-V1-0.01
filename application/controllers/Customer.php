@@ -24,17 +24,24 @@ class Customer extends CI_Controller
 		$this->load->view('templates/footer');  
     }
 
+    public function index()
+    {
+        $this->load->model('customers');
+        $data['retrieveUsers'] = $this->customers->retrieveUsers();
+        $this->load->view('templates/header');
+        $this->load->view('templates/sidebar');
+		$this->load->view('customer/index',$data);
+		$this->load->view('templates/footer');  
+    }
+
+
     function newcustomerinsert()
 
     {
-
         if (isset($_POST['addnew_customer'])) {
-
             $this->load->model('customers');
             $check = $this->customers->new_customer_insert();
-
-            redirect('customer/register');
-            
+            redirect('customer/register');            
         }
     }
   

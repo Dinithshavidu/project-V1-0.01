@@ -55,4 +55,9 @@ class Customers extends CI_Model
 
 	}
 
+	public function retrieveUsers()
+    {
+        return $this->db->select('*')->from('users')->get()->result();
+    }
+
 }

@@ -24,23 +24,22 @@ class Setup extends CI_Controller
 
         $this->load->view('templates/header');
         $this->load->view('templates/sidebar');
-		$this->load->view('setup/sections', $data);
-		$this->load->view('templates/footer');  
+        $this->load->view('setup/sections', $data);
+        $this->load->view('templates/footer');
     }
 
     public function services()
     {
         $this->load->model('setups');
-    $data['retrieveServices'] = $this->setups->retrieveServices();
-    $data['retrieveSections'] = $this->setups->retrieveSections();
+        $data['retrieveServices'] = $this->setups->retrieveServices();
+        $data['retrieveSections'] = $this->setups->retrieveSections();
         $this->load->view('templates/header');
         $this->load->view('templates/sidebar');
-		$this->load->view('setup/services', $data);
-		$this->load->view('templates/footer');  
+        $this->load->view('setup/services', $data);
+        $this->load->view('templates/footer');
     }
 
     function newsSctionsInsert()
-
     {
 
         if (isset($_POST['addnew_section'])) {
@@ -49,23 +48,22 @@ class Setup extends CI_Controller
             $check = $this->setups->new_section_insert();
 
             redirect('setup/sections');
-            
+
         }
     }
 
     function newsServiceInsert()
-
     {
         // echo "<script>console.log('sssssssss' );</script>";
         if (isset($_POST['addnew_service'])) {
-          
+
             $this->load->model('setups');
             $check = $this->setups->new_service_insert();
 
             redirect('setup/services');
-            
+
         }
     }
-  
+
 
 }
