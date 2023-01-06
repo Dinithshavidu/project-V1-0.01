@@ -27,11 +27,20 @@ class Customer extends CI_Controller
     public function index()
     {
         $this->load->model('customers');
-        $data['retrieveUsers'] = $this->customers->retrieveUsers();
+        $data['retrieveCustomers'] = $this->customers->retrieveCustomers();
         $this->load->view('templates/header');
         $this->load->view('templates/sidebar');
 		$this->load->view('customer/index',$data);
 		$this->load->view('templates/footer');  
+    }
+
+    public function profile($page)
+    {    
+      
+        $this->load->model('customers');
+        $data['retive']  = $this->customers->customerDetails($page);
+        $data['ds']  = $page;
+		$this->load->view('customer/profile',$data);	
     }
 
 

@@ -86,6 +86,17 @@
           </ul>
         </li>
 
+        <li class="nav-item">
+          <a href="<?php echo base_url(); ?>appointment/" class="nav-link">
+            <i class="nav-icon fas fa-edit"></i>
+            <p>
+            Appointment
+             
+            </p>
+          </a>
+          
+        </li>
+
 
       </ul>
     </nav>

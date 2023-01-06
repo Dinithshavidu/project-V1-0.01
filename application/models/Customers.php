@@ -1,63 +1,110 @@
 <?php
 class Customers extends CI_Model
 {
-    
-	public function new_customer_insert(){
+
+	public function new_customer_insert()
+	{
 
 		$cust_name = "";
 		$cust_dob = "";
 		$cust_address = "";
 		$cus_no = "";
-		$cust_weight = "";
-		$cust_hight = "";
-		$cust_city = "";
+		$cust_sex = "";
+		$cust_mail = "";
 		$cust_active = 1;
 		$cust_note = "";
-        $cust_cr_emp_id = "";
-        $cust_up_emp_id = "";
-        $cust_time = "";	
+		$cust_cr_emp_id = "";
+		$cust_up_emp_id = "";
+		$cust_time = "";
 
-	   $cust_name  = $this->input->post('cust_name');
-	   $cust_dob  = $this->input->post('cust_dob');
-	   $cust_address  = $this->input->post('cust_address');
-	   $cus_no  = $this->input->post('cus_no');
-	   $cust_weight  = $this->input->post('cust_weight');
-	   $cust_hight  = $this->input->post('cust_hight');
-	   $cust_city  = $this->input->post('cust_city');
-	  
-	   $cust_note  = $this->input->post('cust_note');
-	   $cust_up_emp_id  = $this->input->post('cust_up_emp_id');
-	   $cust_cr_emp_id  = $this->input->post('cust_cr_emp_id');
-       $cust_time  = $this->input->post('cust_time');	
+		$cust_name = $this->input->post('cust_name');
+		$cust_dob = $this->input->post('cust_dob');
+		$cust_address = $this->input->post('cust_address');
+		$cus_no = $this->input->post('cus_no');
+		$cust_mail = $this->input->post('cust_mail');
+		$cust_sex = $this->input->post('cust_sex');
+		$cust_note = $this->input->post('cust_note');
+		$cust_up_emp_id = $this->input->post('cust_up_emp_id');
+		$cust_cr_emp_id = $this->input->post('cust_cr_emp_id');
+		$cust_time = $this->input->post('cust_time');
 
-    
-        $insert_to_customer = array(
 
-            'cust_name' => $cust_name,
-            'cust_dob' => $cust_dob, 
-            'cust_address' => $cust_address,
-            'cus_no' => $cus_no, 
-            'cust_weight' => $cust_weight,
-            'cust_hight' => $cust_hight,
-			'cust_city' => $cust_city,
+		$insert_to_customer = array(
+
+			'cust_name' => $cust_name,
+			'cust_dob' => $cust_dob,
+			'cust_address' => $cust_address,
+			'cus_no' => $cus_no,
+			'cust_mail' => $cust_mail,
 			'cust_active' => $cust_active,
-            'cust_note' => $cust_note,
-            'cust_up_emp_id' => $cust_up_emp_id,
-            'cust_cr_emp_id' => $cust_cr_emp_id,
-            'cust_created_at' => $cust_time,  
-            'cust_updated_at' => $cust_time, 
-               );
-        
-            $this->db->insert('customers',$insert_to_customer);
+			'cust_sex' => $cust_sex,
+			'cust_note' => $cust_note,
+			'cust_up_emp_id' => $cust_up_emp_id,
+			'cust_cr_emp_id' => $cust_cr_emp_id,
+			'cust_created_at' => $cust_time,
+			'cust_updated_at' => $cust_time,
+		);
+
+		$this->db->insert('customers', $insert_to_customer);
 
 
-            return true;
+		return true;
 
 	}
 
-	public function retrieveUsers()
-    {
-        return $this->db->select('*')->from('users')->get()->result();
-    }
+	public function new_customer_update()
+	{
+
+		$cust_name = "";
+		$cust_address = "";
+		$cus_no = "";
+		$cust_mail = "";
+		$cust_note = "";
+		$cust_up_emp_id = "";
+		$cust_time = "";
+
+		$cust_name = $this->input->post('cust_name');
+		$cust_address = $this->input->post('cust_address');
+		$cus_no = $this->input->post('cus_no');
+		$cust_mail = $this->input->post('cust_mail');
+		$cust_note = $this->input->post('cust_note');
+		$cust_up_emp_id = $this->input->post('cust_up_emp_id');
+		$cust_time = $this->input->post('cust_time');
+		$cust_id = $this->input->post('cust_id');
+		$cust_active = $this->input->post('cust_active');
+
+		$insert_to_customer = array(
+
+			'cust_name' => $cust_name,
+			'cust_address' => $cust_address,
+			'cus_no' => $cus_no,
+			'cust_mail' => $cust_mail,
+			'cust_active' => $cust_active,
+			'cust_note' => $cust_note,
+			'cust_up_emp_id' => $cust_up_emp_id,
+			'cust_updated_at' => $cust_time,
+		);
+
+		$this->db->where('cust_id', $cust_id);
+		$this->db->update('customers', $insert_to_customer);
+
+
+
+		return true;
+
+	}
+
+	public function retrieveCustomers()
+	{
+		return $this->db->select('*')->from('customers')->get()->result();
+	}
+
+	public function customerDetails($cust_id)
+	{
+
+		$arr['cust_id'] = $cust_id;
+
+		return $this->db->get_where('customers', $arr)->row();
+	}
 
 }

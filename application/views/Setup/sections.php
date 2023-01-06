@@ -1,6 +1,7 @@
 <div class="content-wrapper">
   <br>
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -63,16 +64,22 @@
                   foreach ($retrieveSections as $get_secs) {
 
 
-                  ?>
+                    ?>
                     <tr>
                       <td> <?php echo $i; ?></td>
-                      <td> <?php echo $get_secs->sec_name; ?></td>
+                      <td>
+                        <?php echo $get_secs->sec_name; ?>
+                      </td>
                       <td><?php echo $get_secs->sec_note; ?></td>
-                      <td> <?php echo $get_secs->sec_create_at; ?></td>
-                      <td> <?php echo $get_secs->sec_active; ?></td>
+                      <td>
+                        <?php echo $get_secs->sec_create_at; ?>
+                      </td>
+                      <td> <?php if ($get_secs->sec_active == 1) { ?> <span class="badge text-bg-success">Active</span>
+                        <?php } else { ?> <span class="badge text-bg-danger">Deactive</span><?php } ?>
+                      </td>
                     </tr>
 
-                  <?php
+                    <?php
                     $i++;
                   }
                   ?>
