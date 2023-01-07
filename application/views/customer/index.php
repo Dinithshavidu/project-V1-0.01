@@ -16,9 +16,9 @@
             <div class="card-header">
               <h3 class="card-title">Sections</h3>
               <div align="right">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
+              <a  type="button" class="btn btn-primary"href="<?php echo base_url(); ?>customer/register" >  
                   Add Customer
-                </button>
+                </a>
               </div>
               
               <div class="form-group">
@@ -66,7 +66,7 @@ function showCustomer(str) {
   };
   console.log(str);
   console.log( `customer/profile/${str}`);
-  xhttp.open("GET", `customer/profile/${str}`, true);
+  xhttp.open("GET", `<?php echo base_url(); ?>customer/profile/${str}`, true);
   xhttp.send();
 }
 </script>

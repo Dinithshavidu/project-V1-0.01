@@ -2,6 +2,13 @@
 class Customers extends CI_Model
 {
 
+	public function validate()
+	{
+		$arr['cus_no'] = $this->input->post('cus_no');
+
+		return $this->db->get_where('customers', $arr)->row();
+	}
+
 	public function new_customer_insert()
 	{
 
@@ -52,7 +59,7 @@ class Customers extends CI_Model
 
 	}
 
-	public function new_customer_update()
+	public function customer_update()
 	{
 
 		$cust_name = "";
@@ -106,5 +113,7 @@ class Customers extends CI_Model
 
 		return $this->db->get_where('customers', $arr)->row();
 	}
+
+	
 
 }

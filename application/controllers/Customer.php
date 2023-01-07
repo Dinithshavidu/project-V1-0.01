@@ -20,9 +20,11 @@ class Customer extends CI_Controller
     {
         $this->load->view('templates/header');
         $this->load->view('templates/sidebar');
-		$this->load->view('customer/register');
-		$this->load->view('templates/footer');  
+        $this->load->view('customer/register');
+        $this->load->view('templates/footer');
     }
+
+  
 
     public function index()
     {
@@ -30,29 +32,52 @@ class Customer extends CI_Controller
         $data['retrieveCustomers'] = $this->customers->retrieveCustomers();
         $this->load->view('templates/header');
         $this->load->view('templates/sidebar');
-		$this->load->view('customer/index',$data);
-		$this->load->view('templates/footer');  
+        $this->load->view('customer/index', $data);
+        $this->load->view('templates/footer');
     }
 
     public function profile($page)
-    {    
-      
+    {
+
         $this->load->model('customers');
-        $data['retive']  = $this->customers->customerDetails($page);
-        $data['ds']  = $page;
-		$this->load->view('customer/profile',$data);	
+        $data['retive'] = $this->customers->customerDetails($page);
+        $data['ds'] = $page;
+        $this->load->view('customer/profile',$data);
     }
 
 
     function newcustomerinsert()
-
     {
         if (isset($_POST['addnew_customer'])) {
             $this->load->model('customers');
-            $check = $this->customers->new_customer_insert();
-            redirect('customer/register');            
+            $check = $this->customers->validate();
+            if ($check) {
+                redirect('customer/register');
+            } else {
+                $this->customers->new_customer_insert();
+                redirect('customer/index');
+            }
+
+
         }
     }
-  
+
+    function updatecustomerinsert()
+    {
+        if (isset($_POST['addnew_customer'])) {
+            $this->load->model('customers');
+            $check = $this->customers->customer_update();
+            redirect('customer/register');
+        }
+    }
+    public function update($page)
+    {
+        $this->load->model('customers');
+        $data['retive'] = $this->customers->customerDetails($page);
+        $this->load->view('templates/header');
+        $this->load->view('templates/sidebar');
+        $this->load->view('customer/update', $data);
+        $this->load->view('templates/footer');
+    }
 
 }
