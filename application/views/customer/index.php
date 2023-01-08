@@ -16,7 +16,7 @@
             <div class="card-header">
               <h3 class="card-title">Sections</h3>
               <div align="right">
-              <a  type="button" class="btn btn-primary"href="<?php echo base_url(); ?>customer/register" >  
+              <a type="button" class="btn btn-primary"href="<?php echo base_url(); ?>customer/register" >  
                   Add Customer
                 </a>
               </div>

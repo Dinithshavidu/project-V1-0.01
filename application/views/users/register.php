@@ -1,88 +1,171 @@
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
 
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Customer Registration Form</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Registration</li>
-            </ol>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Registration</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+
+      <div class="card card-default">
+        <div class="card-header">
+          <h3 class="card-title">Customer Registration Form</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove">
+              <i class="fas fa-times"></i>
+            </button>
           </div>
         </div>
-      </div><!-- /.container-fluid -->
-    </section>
+        <?php
+            // Return current date from the remote server
+            $date = date('d-m-y h:i:s');
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <!-- left column -->
-          <div class="col-md-12">
-          <div class="card card-info">
-              <!-- <div class="card-header">
-                <h3 class="card-title">Horizontal Form</h3>
-              </div> -->
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form class="form-horizontal">
-                <div class="card-body">
-                  <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Customer Name </label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="Name ">
+            ?>
+        <!-- /.card-header -->
+       
+           
+            <!-- /.card-header -->
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <form method="post" action="<?php echo base_url('user/newuserinsert'); ?>">
+                    <input type="hidden" name="user_updateid" value="<?php echo $_SESSION['passed_user_national'] ?>" />
+                    <input type="hidden" name="user_updatetime" value="<?php echo $date; ?>" />
+                    <input type="hidden" name="user_date" value="<?php echo $date; ?>" />
+                    <input type="hidden" name="user_crid" value="<?php echo $_SESSION['passed_user_national'] ?>" />
+                    <div class="form-group">
+                      <label for="user_nic">National Identity Card No</label>
+                      <input type="text" class="form-control" id="user_nic" name="user_nic" placeholder="NIC" required>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="user_name">Name</label>
+                      <input type="text" class="form-control" id="user_name" name="user_name" placeholder="Name"
+                        required>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="user_address">Address</label>
+                      <textarea class="form-control" id="user_address" name="user_address" rows="3"
+                        placeholder="Address"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label>User Role</label>
+                      <select class="form-control select2" id="user_role" name="user_role" style="width: 100%;">
+                        <?php
+
+                        for ($i = 0; $i < count($_SESSION['user_role_id_list']); $i++) {
+                          echo '<option value="' . $_SESSION['user_role_id_list'][$i] . '">' . $_SESSION['user_role_name_list'][$i] . '</option>';
+                        }
+
+                        ?>
+
+                      </select>
+                    </div>
+
+                </div>
+                <!-- /.col -->
+                <div class="col-md-6">
+
+                  <div class="form-group">
+                    <label for="user_eno">Employee ID</label>
+                    <input type="text" class="form-control" id="user_eno" name="user_eno" placeholder="Employee ID"
+                      required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="user_tpno">Mobile Number</label>
+                    <input type="text" class="form-control" d8validation="phone" id="user_tpno" name="user_tpno"
+                      placeholder="Mobile No">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="user_note">Special Note</label>
+                    <input type="text" class="form-control" id="user_note" name="user_note" placeholder="Special Note">
+                  </div>
+
+
+                  <div class="form-group">
+                    <br>
+                    <br>
+                    <label for="exampleInputEmail1">Password</label>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <a id="generate_password" name="addnew_director" onclick="generate_password()"
+                          class="btn btn-danger">Generate Password</a>
+                      </div>
+                      <!-- /btn-group -->
+                      <input type="text" id="user_password" name="user_password" type="password" class="form-control"
+                        placeholder="Enter password" required>
                     </div>
                   </div>
-                  <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Customer Contact Number </label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputPassword3" placeholder="Phone Number">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Customer Email </label>
-                    <div class="col-sm-10">
-                      <input type="email" class="form-control" id="inputPassword3" placeholder="Email">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Customer Address </label>
-                    <div class="col-sm-10">
-                    <textarea class="form-control" rows="3" placeholder="Enter ..." ></textarea>
-                      
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Date of barth (optional) </label>
-                    <div class="col-sm-10">
-                      <input type="date" class="form-control" id="inputPassword3" placeholder="">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Note </label>
-                    <div class="col-sm-10">
-                    <textarea class="form-control" rows="3" placeholder="Enter ..." ></textarea>                      
-                    </div>
+
+                  <div class="form-group" align="right">
+                    <br>
+                    <br>
+
+                    <button type="submit" value="addnew_user" name="addnew_user" class="btn btn-primary">Save New
+                      User</button>
                   </div>
                 </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-info">Sign in</button>
-                  
-                </div>
-                <!-- /.card-footer -->
-              </form>
-            </div>
-          </div>
-          <!--/.col (left) -->
-          
-        </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-  </div>
+
+        </form>
+        <!-- /.form-group -->
+
+        <!-- /.form-group -->
+      </div>
+      <!-- /.col -->
+    </div>
+
+</div>
+
+<!-- /.card-body -->
+</form>
+</div>
+</section>
+<!-- /.content -->
+</div>
+<script>
+  function validating($phone) {
+    if (preg_match('/^[0-9]{10}+$/', $phone)) {
+echo " Valid Phone Number";
+    } else {
+echo " Invalid Phone Number";
+    }
+  }
+</script>
+
+<script>
+
+
+function generate_password(){   
+
+var length = 8,
+		charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+		retVal = "";
+for (var i = 0, n = charset.length; i < length; ++i) {
+		retVal += charset.charAt(Math.floor(Math.random() * n));
+}
+
+var pp = document.getElementById("user_password");
+pp.value = retVal;
+pp.readOnly = true;
+
+}
+</script>

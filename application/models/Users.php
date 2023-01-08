@@ -64,4 +64,64 @@ class Users extends CI_Model
 
 	}
 
+	public function retrieve_all_role_id_list()
+	 {
+ 
+		 $this->db->select('role_id')->from('userroles');
+ 
+		 $query = $this->db->get();
+ 
+		 if ($query->num_rows() > 0) {
+			 $i = 0;
+			 $myarray2 = array();
+ 
+			 foreach ($query->result() as $row1) {
+				 $myarray2[$i] = $row1->role_id;
+				 $i++;
+			 }
+ 
+			 return $myarray2;
+ 
+		 }
+ 
+		 return false;
+ 
+	 }
+
+	 public function retrieve_all_role_name_list()
+	 {
+ 
+		 $this->db->select('role_name')->from('userroles');
+ 
+		 $query = $this->db->get();
+ 
+		 if ($query->num_rows() > 0) {
+			 $i = 0;
+			 $myarray2 = array();
+ 
+			 foreach ($query->result() as $row1) {
+				 $myarray2[$i] = $row1->role_name;
+				 $i++;
+			 }
+ 
+			 return $myarray2;
+ 
+		 }
+ 
+		 return false;
+ 
+	 }
+
+	 public function user_nic_verifi()
+    {
+        $arr['user_nic'] = $this->input->post('nic');
+		// $arr['user_password'] = md5($this->input->post('password'));
+		
+        return $this->db->get_where('users', $arr)->row();
+    }
+
+
+	 
+
+
 }

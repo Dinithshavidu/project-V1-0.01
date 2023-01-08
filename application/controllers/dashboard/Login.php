@@ -20,6 +20,13 @@ class Login extends CI_Controller
 		$this->load->model('sessionass');
 		$roleid = $this->sessionass->checksession();
 		$this->session->set_userdata('LOGGED_USER_ROLE_ID', $roleid);
+		$user_data = array();
+		$user_data = $this->sessionass->retrieve_log_data();
+
+		$this->session->set_userdata('passed_user_name', $user_data[0]);
+		$this->session->set_userdata('passed_user_national', $user_data[1]);
+		$this->session->set_userdata('passed_user_address', $user_data[2]);
+
 		if ($check) {
 			$roleid = 1;
 			switch ($roleid) {
