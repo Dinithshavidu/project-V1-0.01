@@ -67,7 +67,36 @@
 
           </ul>
         </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-edit"></i>
+            <p>
+              Employee
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="<?php echo base_url(); ?>user/register" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Register</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?php echo base_url(); ?>user/changePassword" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Change Password</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?php echo base_url(); ?>user/edit" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>edit</p>
+              </a>
+            </li>
 
+          </ul>
+        </li>
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-edit"></i>
