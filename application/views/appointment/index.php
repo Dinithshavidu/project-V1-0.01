@@ -7,7 +7,7 @@
   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>plugins/appointment.css"/>
 
   <!-- DayPilot library -->
-  <script src="<?php echo base_url(); ?>appoinment/js/daypilot/daypilot-all.min.js"></script>
+  <script src="<?php echo base_url(); ?>externalServices/js/daypilot/daypilot-all.min.js"></script>
 </head>
 <body>
 
@@ -27,20 +27,23 @@
 
 <script>
   const scheduler = new DayPilot.Scheduler("scheduler", {
-    cellDuration: 30,
+    cellDuration: 15,
     cellWidth: 60,
     days: DayPilot.Date.today().daysInMonth(),
     dragOutAllowed: true,
     durationBarHeight: 5,
     eventHeight: 45,
+    // rowHeaderColumns: [
+    //   {name: "Name"},
+    //   {name: "Can drive", display: "driving"}
+    // ],
     rowHeaderColumns: [
-      {name: "Name"},
-      {name: "Can drive", display: "driving"}
+      {name: "Name"}
     ],
     scale: "CellDuration",
     showNonBusiness: false,
     startDate: DayPilot.Date.today().firstDayOfMonth(),
-    timeHeaders: [{groupBy: "Day"}, {groupBy: "Hour"}],
+    timeHeaders: [{groupBy: "Day"}, {groupBy: "Hour"}, {groupBy: "Cell"}],
     timeRangeSelectedHandling: "Enabled",
     treeEnabled: true,
     treePreventParentUsage: true,
@@ -49,6 +52,19 @@
       const text = DayPilot.Util.escapeHtml(args.data.text);
       const hours = new DayPilot.Duration(args.data.start, args.data.end).totalHours();
 
+      // let hoursMinText = "";
+      // if(hours=="0.25"){
+      //   hoursMinText = "15";
+      // }else if(hours=="0.5"){
+      //   hoursMinText = "30";
+      // }else if(hours=="0.75"){
+      //   hoursMinText= "45";
+      // }else {
+      //   hoursMinText= "00";
+      // }
+      //  const hoursTxtHValue = hours.toString().split(".")?.[0] || "00";
+      //  const hoursTxt = `${hoursTxtHValue}.${hoursMinText}`;
+
       // styling
       args.data.barColor = args.data.color;
       if (!args.data.barColor) {
@@ -56,7 +72,7 @@
       }
 
       // content
-      args.data.html = `<div>${text}<br><span class='task-duration'>${hours} hours</span></div>`;
+      args.data.html = `<div><b>${text}</b><br><span class='task-duration'>${hours} hours</span></div>`;
 
       // context menu icon
       args.data.areas = [
@@ -66,7 +82,7 @@
           height: 16,
           width: 16,
           fontColor: "#666",
-          symbol: "icons/daypilot.svg#minichevron-down-4",
+          symbol: "<?php echo base_url(); ?>externalServices/icons/daypilot.svg#minichevron-down-4",
           visibility: "Hover",
           action: "ContextMenu",
           style: "background-color: rgba(255, 255, 255, .5); border: 1px solid #666; box-sizing: border-box; cursor:pointer;"
@@ -117,7 +133,7 @@
           text: "Unschedule",
           onClick: async args => {
             const ev = args.source;
-            const {data: item} = await DayPilot.Http.post("<?php echo base_url(); ?>appoinment/api/work_order_unschedule.php", {
+            const {data: item} = await DayPilot.Http.post("<?php echo base_url(); ?>externalServices/api/work_order_unschedule.php", {
               id: ev.data.id
             });
 
@@ -185,7 +201,7 @@
           height: 16,
           width: 16,
           fontColor: "#666",
-          symbol: "icons/daypilot.svg#minichevron-down-4",
+          symbol: "<?php echo base_url(); ?>externalServices/icons/daypilot.svg#minichevron-down-4",
           visibility: "Hover",
           action: "ContextMenu",
           style: "background-color: rgba(255, 255, 255, .5); border: 1px solid #666; box-sizing: border-box; cursor:pointer;"
@@ -196,7 +212,7 @@
           bottom: 0,
           width: 12,
           fontColor: "#666",
-          symbol: "icons/daypilot.svg#move-vertical",
+          symbol: "<?php echo base_url(); ?>externalServices/icons/daypilot.svg#move-vertical",
           style: "cursor: move",
           visibility: "Hover",
           toolTip: "Drag task to the scheduler"
@@ -218,7 +234,6 @@
   });
   unscheduled.init();
 
-
   const workOrderApp = {
     elements: {
       addToQueue: document.querySelector("#addToQueue")
@@ -230,26 +245,24 @@
       {name: "Yellow", id: "#f1c232"},
     ],
     async schedulerClickDelete(id) {
-      await DayPilot.Http.post("<?php echo base_url(); ?>appoinment/api/work_order_delete.php", {id});
+      await DayPilot.Http.post("<?php echo base_url(); ?>externalServices/api/work_order_delete.php", {id});
       scheduler.events.remove(id);
     },
-    async schedulerLoad() {
+    async schedulerLoad() {     
       const start = scheduler.visibleStart();
-      const end = scheduler.visibleEnd();
-      const promiseResources = DayPilot.Http.get(`<?php echo base_url(); ?>appoinment/api/work_order_resources.php`);
-      const promiseEvents = DayPilot.Http.get(`<?php echo base_url(); ?>appoinment/api/work_order_list.php?start=${start}&end=${end}`);
-
-      const [{data: resources}, {data: events}] = await Promise.all([promiseResources, promiseEvents]);
-
-      scheduler.update({resources, events});
+      const end = scheduler.visibleEnd();    
+      const resources = JSON.parse(`<?php echo $usersdata; ?>`);      
+      const promiseEvents = DayPilot.Http.get(`<?php echo base_url(); ?>externalServices/api/work_order_list.php?start=${start}&end=${end}`);
+      const [{data: events}] = await Promise.all([promiseEvents]);   
+      scheduler.update({resources, events});      
     },
     async queueLoad() {
-      const {data} = await DayPilot.Http.get("<?php echo base_url(); ?>appoinment/api/work_order_unscheduled_list.php");
+      const {data} = await DayPilot.Http.get("<?php echo base_url(); ?>externalServices/api/work_order_unscheduled_list.php");
       const events = data.map(item => ({...item, duration: DayPilot.Duration.ofMinutes(item.duration)}));
       unscheduled.update({events});
     },
     async queueTaskDelete(id) {
-      await DayPilot.Http.post("<?php echo base_url(); ?>appoinment/api/work_order_delete.php", {id});
+      await DayPilot.Http.post("<?php echo base_url(); ?>externalServices/api/work_order_delete.php", {id});
       unscheduled.events.remove(id);
     },
     queueTaskForm() {
@@ -310,7 +323,7 @@
         ...workOrderApp.startEndFromMinutes(modal.result.duration)
       };
 
-      const {data: created} = await DayPilot.Http.post("<?php echo base_url(); ?>appoinment/api/work_order_unscheduled_create.php", params);
+      const {data: created} = await DayPilot.Http.post("<?php echo base_url(); ?>externalServices/api/work_order_unscheduled_create.php", params);
 
       unscheduled.events.add(created);
 
@@ -346,14 +359,14 @@
 
       console.log("params", params);
 
-      const {data: updated} = await DayPilot.Http.post("<?php echo base_url(); ?>appoinment/api/work_order_unscheduled_update.php", params);
+      const {data: updated} = await DayPilot.Http.post("<?php echo base_url(); ?>externalServices/api/work_order_unscheduled_update.php", params);
 
       unscheduled.events.update(updated);
 
     },
     async queueTaskMove(e, position, external, source) {
       const id = e.id();
-      const {data: item} = await DayPilot.Http.post("<?php echo base_url(); ?>appoinment/api/work_order_move.php", {id, position});
+      const {data: item} = await DayPilot.Http.post("<?php echo base_url(); ?>externalServices/api/work_order_move.php", {id, position});
       if (external) {
         source.events.remove(e);
       }
@@ -373,13 +386,14 @@
         resource: resource
       };
 
-      const {data: result} = await DayPilot.Http.post("<?php echo base_url(); ?>appoinment/api/work_order_create.php", params);
+      const {data: result} = await DayPilot.Http.post("<?php echo base_url(); ?>externalServices/api/work_order_create.php", params);
 
       scheduler.events.add(result);
 
     },
     async schedulerTaskEdit(e) {
-      const {data: resources} = await DayPilot.Http.get("<?php echo base_url(); ?>appoinment/api/work_order_resources_flat.php");
+     
+      const {data: resources} = await DayPilot.Http.get("<?php echo base_url(); ?>externalServices/api/work_order_resources_flat.php");
 
       const form = [
         {
@@ -419,7 +433,7 @@
         return;
       }
 
-      await DayPilot.Http.post("<?php echo base_url(); ?>appoinment/api/work_order_update.php", modal.result);
+      await DayPilot.Http.post("<?php echo base_url(); ?>externalServices/api/work_order_update.php", modal.result);
 
       const data = {
         ...e.data,
@@ -438,7 +452,7 @@
         resource
       };
 
-      await DayPilot.Http.post("<?php echo base_url(); ?>appoinment/api/work_order_move.php", params);
+      await DayPilot.Http.post("<?php echo base_url(); ?>externalServices/api/work_order_move.php", params);
 
       if (external) {
         unscheduled.events.remove(id);

@@ -8,6 +8,11 @@ class Users extends CI_Model
 		return $this->db->get_where('users', $arr)->row();
 	}
 
+	public function get_all_users()
+	{
+		return $this->db->get_where('users')->result();
+	}
+
 	public function new_user_insert()
 	{
 

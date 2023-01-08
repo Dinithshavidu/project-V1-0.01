@@ -2,7 +2,6 @@
 class Appointments extends CI_Model
 {
 
-
 	public function new_consultation_insert()
 	{
 
@@ -136,5 +135,70 @@ class Appointments extends CI_Model
 
 	}
 
+	
+
+	public function get_all_users_formatted(){
+
+		$this->db->order_by("name", "asc");
+		$query = $this->db->get('groups');
+		$scheduler_groups = $query->result_array();
+		
+		$groups = array();
+
+		foreach($scheduler_groups as $group) {
+		$g = new Group();
+		$g->id = "group_".$group['id'];
+		$g->name = $group['name'];
+		$g->expanded = true;
+		$g->children = array();
+		$groups[] = $g;
+
+		$this->db->order_by("user_name", "asc");
+		$query = $this->db->get_where('users', array('user_group_id =' => $group['id']));
+		$scheduler_resources = $query->result_array();
+
+		
+		foreach($scheduler_resources as $resource) {
+			$r = new Resource();
+			$r->id = $resource['user_id'];
+			$r->name = $resource['user_name'];
+			$r->driving = 'Yes';
+			$g->children[] = $r;
+		}		
+	  }
+
+	  //header('Content-Type: application/json');	
+	  return json_encode($groups);
+
+	}
+
+	public function get_all_events_by_userdata(){
+
+		$query = $this->db->query('SELECT * FROM events WHERE resource_id is not null and NOT ((end <= '.$_GET["start"].') OR (start >= '.$_GET["end"].'))');
+		$result = $query->result_array();
+		
+		$events = array();
+
+		foreach($result as $row) {
+		$e = new Event();
+		$e->id = $row['id'];
+		$e->text = $row['name'];
+		$e->start = $row['start'];
+		$e->end = $row['end'];
+		$e->resource = $row['resource_id'];
+		$e->color = $row['color'];
+
+		$events[] = $e;
+		}
+
+		echo json_encode($events);
+
+	}
 
 }
+
+class Event {}
+class Group {}
+class Resource {}
+
+?>
