@@ -1,8 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  <a href="index3.html" class="brand-link">
-    <span class="brand-text font-weight-light">AdminLTE 3</span>
-  </a>
+  
 
   <!-- Sidebar -->
   <div class="sidebar">
@@ -10,7 +8,7 @@
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
 
       <div class="info">
-        <a href="#" class="d-block">Alexander Pierce</a>
+        <a href="#" class="d-block"><?php echo $_SESSION['passed_user_name']; ?></a>
       </div>
     </div>
 
@@ -41,90 +39,10 @@
           </a>
 
         </li>
-
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-edit"></i>
-            <p>
-              Customers
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-          <li class="nav-item">
-              <a href="<?php echo base_url(); ?>customer/index" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Search</p>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a href="<?php echo base_url(); ?>customer/register" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Registrations</p>
-              </a>
-            </li>
-
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-edit"></i>
-            <p>
-              Employee
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="<?php echo base_url(); ?>user/register" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Register</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="<?php echo base_url(); ?>user/changePassword" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Change Password</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="<?php echo base_url(); ?>user/edit" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>edit</p>
-              </a>
-            </li>
-
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-edit"></i>
-            <p>
-              Option
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="<?php echo base_url(); ?>setup/sections" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Section</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="<?php echo base_url(); ?>setup/services" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Service</p>
-              </a>
-            </li>
-
-          </ul>
-        </li>
-
+        <li class="nav-header">APPOINTMENT SECTION</li>
         <li class="nav-item">
           <a href="<?php echo base_url(); ?>appointment/" class="nav-link">
-            <i class="nav-icon fas fa-edit"></i>
+          <i class="fas fa-circle nav-icon"></i>
             <p>
             Appointment
              
@@ -132,6 +50,61 @@
           </a>
           
         </li>
+        <li class="nav-header">CUSTOMER SECTION</li>
+          <li class="nav-item">
+            <a href="<?php echo base_url(); ?>customer/index" class="nav-link">
+              <i class="fas fa-circle nav-icon"></i>
+              <p>Customer Search</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?php echo base_url(); ?>customer/register" class="nav-link">
+              <i class="fas fa-circle nav-icon"></i>
+              <p>Customer Register</p>
+            </a>
+          </li>
+          <li class="nav-header">USER SECTION</li>
+          <li class="nav-item">
+            <a href="<?php echo base_url(); ?>user/register" class="nav-link">
+              <i class="fas fa-circle nav-icon"></i>
+              <p>User Registration</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?php echo base_url(); ?>user/changePassword" class="nav-link">
+              <i class="fas fa-circle nav-icon"></i>
+              <p>Password Recovery</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?php echo base_url(); ?>user/edit" class="nav-link">
+              <i class="fas fa-circle nav-icon"></i>
+              <p>User Changes</p>
+            </a>
+          </li>
+          <li class="nav-header">SYSTEM SETUP</li>
+        
+            <li class="nav-item">
+              <a href="<?php echo base_url(); ?>setup/sections" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Section</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?php echo base_url(); ?>setup/services" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Service</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?php echo base_url(); ?>setup/groups" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Groups</p>
+              </a>
+            </li>
+
+
+        
 
 
       </ul>

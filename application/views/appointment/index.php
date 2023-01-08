@@ -11,7 +11,7 @@
 </head>
 <body>
 
-
+<div class="content-wrapper">
 <div class="main">
   <div class="parent">
     <div class="left">
@@ -473,6 +473,6 @@
 
 
 </script>
-
+</div>
 </body>
 </html>

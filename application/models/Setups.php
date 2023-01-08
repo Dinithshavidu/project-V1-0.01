@@ -31,6 +31,30 @@ class Setups extends CI_Model
 
     }
 
+    public function new_group_insert()
+    {
+
+        $gr_name = "";
+        $gr_note = "";
+       
+
+        $gr_name = $this->input->post('gr_name');
+        $gr_note = $this->input->post('gr_note');
+      
+        $insert_to_groups = array(
+
+            'name' => $gr_name,
+            'gr_note' => $gr_note,
+           
+        );
+
+        $this->db->insert('groups', $insert_to_groups);
+
+
+        return true;
+
+    }
+
     public function new_service_insert()
     {
 
@@ -90,6 +114,11 @@ class Setups extends CI_Model
     public function retrieveSections()
     {
         return $this->db->select('*')->from('sections')->get()->result();
+    }
+
+    public function retrieveGroups()
+    {
+        return $this->db->select('*')->from('groups')->get()->result();
     }
     public function retrieveServices()
     {

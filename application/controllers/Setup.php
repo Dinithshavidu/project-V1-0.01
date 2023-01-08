@@ -28,6 +28,19 @@ class Setup extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function groups()
+    {
+
+        $this->load->model('setups');
+        $data['retrieveGroups'] = $this->setups->retrieveGroups();
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/sidebar');
+        $this->load->view('setup/groups', $data);
+        $this->load->view('templates/footer');
+    }
+
+
     public function services()
     {
         $this->load->model('setups');
@@ -61,6 +74,19 @@ class Setup extends CI_Controller
             $check = $this->setups->new_service_insert();
 
             redirect('setup/services');
+
+        }
+    }
+
+    function newsGroupInsert()
+    {
+
+        if (isset($_POST['addnew_groups'])) {
+
+            $this->load->model('setups');
+            $check = $this->setups->new_group_insert();
+
+            redirect('setup/groups');
 
         }
     }

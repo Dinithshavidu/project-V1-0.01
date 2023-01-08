@@ -18,7 +18,6 @@ class User extends CI_Controller
         $user_role_id_list_for_admin = $this->users->retrieve_all_role_id_list();
         $this->session->set_userdata('user_role_id_list', $user_role_id_list_for_admin);
 
-        //retrieve all nic list for admin
         $user_role_name_list_for_admin = array();
         $user_role_name_list_for_admin = $this->users->retrieve_all_role_name_list();
         $this->session->set_userdata('user_role_name_list', $user_role_name_list_for_admin);

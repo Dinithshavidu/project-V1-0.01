@@ -7,7 +7,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Registration</li>
+                        <li class="breadcrumb-item active">Edit</li>
                     </ol>
                 </div>
             </div>
@@ -20,7 +20,7 @@
 
             <div class="card card-default">
                 <div class="card-header">
-                    <h3 class="card-title">Customer Registration Form</h3>
+                    <h3 class="card-title">User Registration Form</h3>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">

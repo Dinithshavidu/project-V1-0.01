@@ -8,7 +8,7 @@ class Customer extends CI_Controller
     {
         parent::__construct();
 
-
+        $this->session->unset_userdata('LOGGED_PAGE');
         if ($this->session->userdata('admin')) {
         } else if ($this->session->userdata('admin22')) {
         } else {
@@ -18,6 +18,7 @@ class Customer extends CI_Controller
 
     public function register()
     {
+        $this->session->set_userdata('LOGGED_PAGE', "customer_register");
         $this->load->view('templates/header');
         $this->load->view('templates/sidebar');
         $this->load->view('customer/register');
