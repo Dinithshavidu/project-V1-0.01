@@ -6,14 +6,14 @@ $scheduler_groups = $db->query('SELECT * FROM groups ORDER BY name');
 class Resource {}
 $resources = array();
 
-$stmt = $db->prepare('SELECT * FROM resources ORDER BY name');
+$stmt = $db->prepare('SELECT * FROM users ORDER BY name');
 $stmt->execute();
 $scheduler_resources = $stmt->fetchAll();
 
 foreach($scheduler_resources as $resource) {
   $r = new Resource();
-  $r->id = $resource['id'];
-  $r->name = $resource['name'];
+  $r->id = $resource['user_id'];
+  $r->name = $resource['user_name'];
   $resources[] = $r;
 }
 

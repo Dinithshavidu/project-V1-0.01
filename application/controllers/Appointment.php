@@ -18,7 +18,10 @@ class Appointment extends CI_Controller
 
     public function index()
     {
-        $this->load->view('templates/top-header');
+        $this->load->model('appointments');
+        $data['usersdata'] = $this->appointments->get_all_users_formatted();
+        $this->load->view('templates/top-header', $data);
+       // $this->load->view('templates/top-header');
 		$this->load->view('appointment/index');
 		$this->load->view('templates/footer');  
     }
