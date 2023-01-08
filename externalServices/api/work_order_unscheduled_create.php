@@ -6,12 +6,13 @@ $params = json_decode($json);
 
 $ordinal = db_get_max_ordinal() + 1;
 
-$stmt = $db->prepare("INSERT INTO events (name, start, end, color, ordinal) VALUES (:name, :start, :end, :color, :ordinal)");
+$stmt = $db->prepare("INSERT INTO events (name, start, end, color, ordinal, customer) VALUES (:name, :start, :end, :color, :ordinal, :customer)");
 $stmt->bindParam(':name', $params->text);
 $stmt->bindParam(':start', $params->start);
 $stmt->bindParam(':end', $params->end);
 $stmt->bindParam(':color', $params->color);
 $stmt->bindParam(':ordinal', $ordinal);
+$stmt->bindParam(':customer', $params->customer);
 $stmt->execute();
 
 db_compact_ordinals();
@@ -23,6 +24,7 @@ $response->start = $params->start;
 $response->end = $params->end;
 $response->text = $params->text;
 $response->color = $params->color;
+$response->customer = $params->customer;
 $response->id = $db->lastInsertId();
 
 header('Content-Type: application/json');
