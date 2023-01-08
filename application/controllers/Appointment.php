@@ -27,6 +27,9 @@ class Appointment extends CI_Controller
     }
 
 
+    public function fetch_users_flat_by_call(){
+        $this->load->model('appointments');
+        return $this->appointments->get_all_users_flat();
+    }
   
-
 }

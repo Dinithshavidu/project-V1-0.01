@@ -28,6 +28,7 @@
 <script>
   const scheduler = new DayPilot.Scheduler("scheduler", {
     cellDuration: 15,
+    // cellDuration: 30,
     cellWidth: 60,
     days: DayPilot.Date.today().daysInMonth(),
     dragOutAllowed: true,
@@ -44,6 +45,7 @@
     showNonBusiness: false,
     startDate: DayPilot.Date.today().firstDayOfMonth(),
     timeHeaders: [{groupBy: "Day"}, {groupBy: "Hour"}, {groupBy: "Cell"}],
+    // timeHeaders: [{groupBy: "Day"}, {groupBy: "Hour"}],
     timeRangeSelectedHandling: "Enabled",
     treeEnabled: true,
     treePreventParentUsage: true,
@@ -393,7 +395,8 @@
     },
     async schedulerTaskEdit(e) {
      
-      const {data: resources} = await DayPilot.Http.get("<?php echo base_url(); ?>externalServices/api/work_order_resources_flat.php");
+      //const {data: resources} = await DayPilot.Http.get("<?php echo base_url(); ?>externalServices/api/work_order_resources_flat.php");
+      const {data: resources} = await DayPilot.Http.get("<?php echo base_url(); ?>appointment/fetch_users_flat_by_call");
 
       const form = [
         {

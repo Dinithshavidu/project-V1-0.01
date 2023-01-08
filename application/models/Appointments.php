@@ -135,6 +135,29 @@ class Appointments extends CI_Model
 
 	}
 
+	public function get_all_users_flat(){
+
+		$this->db->order_by("name", "asc");
+		$query = $this->db->get('groups');
+		$scheduler_groups = $query->result_array();
+		
+		$resources = array();
+
+		$this->db->order_by("user_name", "asc");
+		$query = $this->db->get('users');
+		$usersData = $query->result_array();
+
+		foreach($usersData as $resource) {
+			$r = new Resource();
+			$r->id = $resource['user_id'];
+			$r->name = $resource['user_name'];
+			$resources[] = $r;
+		}
+
+	  //header('Content-Type: application/json');	
+	  return json_encode($resources);
+
+	}
 	
 
 	public function get_all_users_formatted(){
