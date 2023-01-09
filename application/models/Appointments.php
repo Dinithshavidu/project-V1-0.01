@@ -210,6 +210,7 @@ class Appointments extends CI_Model
 		$e->end = $row['end'];
 		$e->resource = $row['resource_id'];
 		$e->color = $row['color'];
+		$e->customer = $row['customer'];
 
 		$events[] = $e;
 		}

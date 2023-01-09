@@ -106,6 +106,24 @@ class Customers extends CI_Model
 		return $this->db->select('*')->from('customers')->get()->result();
 	}
 
+	public function get_all_customers_formatted(){
+
+		$this->db->order_by("cust_name", "asc");
+		$query = $this->db->get('customers');
+		$scheduler_groups = $query->result_array();
+		
+		$customers = array();
+
+		foreach($scheduler_groups as $cust) {
+		$c = new Customer();
+		$c->id = $cust['cust_id'];
+		$c->name = $cust['cust_name'];
+		$customers[] = $c;	
+	  }
+
+	  return json_encode($customers);
+	}
+
 	public function customerDetails($cust_id)
 	{
 
@@ -117,3 +135,7 @@ class Customers extends CI_Model
 	
 
 }
+
+class Customer {}
+
+?>

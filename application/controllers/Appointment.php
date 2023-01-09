@@ -21,6 +21,10 @@ class Appointment extends CI_Controller
         
         $this->load->model('appointments');
         $data['usersdata'] = $this->appointments->get_all_users_formatted();
+
+        $this->load->model('customers');
+        $data['customerData'] = $this->customers->get_all_customers_formatted();
+
         $this->load->view('templates/top-header', $data);
        // $this->load->view('templates/top-header');
 		$this->load->view('appointment/index');

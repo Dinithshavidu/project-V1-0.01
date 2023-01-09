@@ -29,29 +29,29 @@
   const scheduler = new DayPilot.Scheduler("scheduler", {
     cellDuration: 15,
     // cellDuration: 30,
-    cellWidth: 60,
+    cellWidth: 70,
     days: DayPilot.Date.today().daysInMonth(),
     dragOutAllowed: true,
     durationBarHeight: 5,
-    eventHeight: 45,
+    eventHeight: 65,
     // rowHeaderColumns: [
     //   {name: "Name"},
     //   {name: "Can drive", display: "driving"}
     // ],
     rowHeaderColumns: [
-      {name: "Name"}
+      {name: "Employee"}
     ],
     scale: "CellDuration",
     showNonBusiness: false,
     startDate: DayPilot.Date.today().firstDayOfMonth(),
     timeHeaders: [{groupBy: "Day"}, {groupBy: "Hour"}, {groupBy: "Cell"}],
-    // timeHeaders: [{groupBy: "Day"}, {groupBy: "Hour"}],
     timeRangeSelectedHandling: "Enabled",
     treeEnabled: true,
     treePreventParentUsage: true,
     onBeforeEventRender: args => {
 
       const text = DayPilot.Util.escapeHtml(args.data.text);
+      const customer = DayPilot.Util.escapeHtml(args.data.customer) || "NO" ;
       const hours = new DayPilot.Duration(args.data.start, args.data.end).totalHours();
 
       // let hoursMinText = "";
@@ -74,7 +74,7 @@
       }
 
       // content
-      args.data.html = `<div><b>${text}</b><br><span class='task-duration'>${hours} hours</span></div>`;
+      args.data.html = `<div><b>${text}</b><br><span class='task-duration'>${hours} hours</span> <br> CustID: ${customer}</div>`;
 
       // context menu icon
       args.data.areas = [
@@ -266,7 +266,7 @@
     async queueTaskDelete(id) {
       await DayPilot.Http.post("<?php echo base_url(); ?>externalServices/api/work_order_delete.php", {id});
       unscheduled.events.remove(id);
-    },
+    },   
     queueTaskForm() {
       const durations = [
         {id: 60, name: "1 hour"},
@@ -286,9 +286,22 @@
         {id: 480, name: "8 hours"},
       ];
 
+    
+      const customersData = JSON.parse(`<?php echo $customerData; ?>`);
+
+     
+      // const customersData = [
+      //   {id: 5, name: "Customer 1"},
+      //   {id: 6, name: "Customer 2"},
+      //   {id: 7, name: "Customer 3"},
+      //   {id: 8, name: "Customer 4"},
+      // ];
+
+
       const form = [
         {name: 'Description', id: 'text', type: 'text',},
         {type: 'select', id: 'duration', name: 'Duration', options: durations,},
+        {type: 'select', id: 'customer', name: 'Customer', options: customersData,},
         {
           type: 'select',
           id: 'color',
