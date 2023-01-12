@@ -35,8 +35,12 @@
             <div class="card-header">
               <h3 class="card-title">Sections</h3>
               <div align="right">
-              <a type="button" class="btn btn-primary"href="<?php echo base_url(); ?>customer/register" >  
-                  Add Customer
+              <a type="button" class="btn btn-primary"  onclick="addApointment()">  
+                  Add Appointment to Sameera 3.30 - 4.00
+                </a>
+
+                <a type="button" class="btn btn-warning"  onclick="addApointment2()">  
+                  Add Appointment to Akila 4.30 - 5.30
                 </a>
               </div>
               
@@ -96,7 +100,7 @@
 
                             
                     
-                        <td scope="col" class="tableCell" onclick="showIndexOfCell(this)">
+                        <td scope="col" id="<?php echo $customerData->cust_name; ?>_<?php echo $hrs; ?>" class="tableCell" onclick="showIndexOfCell(this)">
                         <!-- <
                             ?php echo $customerData->cust_id; ?> -->
                             CELL DATA
@@ -133,23 +137,20 @@
 </div>
 
 <script>
-function showCustomer(str) {
-  var xhttp;    
-  if (str == "") {
-    document.getElementById("txtHint").innerHTML = "";
-    return;
-  }
-  console.log(str)
-  xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("txtHint").innerHTML = this.responseText;
-    }
-  };
-  console.log(str);
-  console.log( `customer/profile/${str}`);
-  xhttp.open("GET", `<?php echo base_url(); ?>customer/profile/${str}`, true);
-  xhttp.send();
+
+function addApointment(str) {
+  document.getElementById("Sameera_3:30 AM").style.background='#0984e3';
+  document.getElementById("Sameera_3:30 AM").innerHTML = "topic <br> 3:30 AM - 4.00 AM"; 
+}
+
+
+function addApointment2(str) {
+  document.getElementById("Akila_4:30 AM").style.background='#f9ca24';
+  document.getElementById("Akila_5:00 AM").style.background='#f9ca24';
+  document.getElementById("Akila_5:30 AM").style.background='#f9ca24';
+  document.getElementById("Akila_4:30 AM").innerHTML = "topic <br> 4:30 AM"; 
+  document.getElementById("Akila_5:00 AM").innerHTML = "-"; 
+  document.getElementById("Akila_5:30 AM").innerHTML = "<br> 5:30 AM"; 
 }
 
 
@@ -158,8 +159,10 @@ function showIndexOfCell(x, cust, timeD) {
         var tr = x.parentNode.rowIndex;
         var td = x.cellIndex;        
         document.getElementById("cellCol").innerHTML = "Colum index is: " + td;
-        document.getElementById("cellRow").innerHTML = "Row index is: " + tr;
+        document.getElementById("cellRow").innerHTML = "Row index is: " + tr;       
 }
+
+
 
 
 </script>
