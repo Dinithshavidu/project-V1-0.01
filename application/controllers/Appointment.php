@@ -23,12 +23,15 @@ class Appointment extends CI_Controller
         $data['usersdata'] = $this->appointments->get_all_users_formatted();
 
         $this->load->model('customers');
-        $data['customerData'] = $this->customers->get_all_customers_formatted();
+        //$data['customerData'] = $this->customers->get_all_customers_formatted();
+        $data['retrieveCustomers'] = $this->customers->retrieveCustomers();
 
-        $this->load->view('templates/top-header', $data);
-       // $this->load->view('templates/top-header');
-		$this->load->view('appointment/index');
-		$this->load->view('templates/footer');  
+        $data['hoursRange'] = $this->generateHoursRange();
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/sidebar');
+        $this->load->view('appointment/index', $data);
+        $this->load->view('templates/footer');
     }
 
 
@@ -36,5 +39,20 @@ class Appointment extends CI_Controller
         $this->load->model('appointments');
         return $this->appointments->get_all_users_flat();
     }
+
+    public function generateHoursRange( $lower = 10800, $upper = 84600, $step = 1800, $format = '' ) {
+        $times = array();    
+        if ( empty( $format ) ) {
+            $format = 'g:i A';
+        }    
+        foreach ( range( $lower, $upper, $step ) as $increment ) {
+            $increment = gmdate( 'H:i', $increment );    
+            list( $hour, $minutes ) = explode( ':', $increment );    
+            $date = new DateTime( $hour . ':' . $minutes );    
+            $times[(string) $increment] = $date->format( $format );
+        }
+        return $times;
+    }
+    
   
 }
