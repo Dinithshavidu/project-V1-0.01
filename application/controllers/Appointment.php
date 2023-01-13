@@ -22,8 +22,10 @@ class Appointment extends CI_Controller
         $this->load->model('appointments');
         $data['usersdata'] = $this->appointments->get_all_users_formatted();
 
-        $this->load->model('customers');
-        //$data['customerData'] = $this->customers->get_all_customers_formatted();
+        $this->load->model('users');
+        $data['allUsers'] = $this->users->get_all_users_without_superAdmin();
+
+        $this->load->model('customers');       
         $data['retrieveCustomers'] = $this->customers->retrieveCustomers();
 
         $data['hoursRange'] = $this->generateHoursRange();
