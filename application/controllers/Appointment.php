@@ -21,6 +21,8 @@ class Appointment extends CI_Controller
         
         $this->load->model('appointments');
         $data['usersdata'] = $this->appointments->get_all_users_formatted();
+        $data['usersWithServices'] = $this->appointments->getUserServiceRelation();
+        $data['allApointments'] = $this->appointments->getAllApointments();
 
         $this->load->model('users');
         $data['allUsers'] = $this->users->get_all_users_without_superAdmin();
@@ -54,6 +56,14 @@ class Appointment extends CI_Controller
             $times[(string) $increment] = $date->format( $format );
         }
         return $times;
+    }
+
+    public function insertApointment() {
+        $this->load->model('appointments');
+        $insertApointment = $this->appointments->new_appointment_insert();
+        if($insertApointment){
+            redirect('appointment/');
+        }
     }
     
   

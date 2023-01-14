@@ -2,6 +2,28 @@
 class Appointments extends CI_Model
 {
 
+	public function getUserServiceRelation()
+	{
+		$this->db->select("*");
+		$this->db->from('user_services_by_date');
+		$this->db->join('users', 'users.user_nic = user_services_by_date.user_nic');
+		$this->db->join('services', 'services.sr_id = user_services_by_date.sr_id');
+		$query = $this->db->get()->result();
+		
+		return $query;
+	}
+
+	public function getAllApointments()
+	{
+		$this->db->select("*");
+		$this->db->from('appointment');
+		$this->db->join('customers', 'customers.cust_id = appointment.ap_cust_id');
+		$this->db->join('services', 'services.sr_id = appointment.ap_sr_id');
+		$query = $this->db->get()->result();
+		return $query;
+	}
+
+
 	public function new_consultation_insert()
 	{
 
@@ -57,51 +79,42 @@ class Appointments extends CI_Model
 	public function new_appointment_insert()
 	{
 
-		$ap_cust_no = "";
-		$ap_service_type = "";
-		$ap_job_id = "";
-		$ap_treatment = "";
-		$ap_date = "";
-		$ap_alocate_time = "";
-		$ap_note = "";
-		$ap_active = "";
-		$ap_emp_id = "";
-		$ap_is_complete = "";
-		$ap_time = "";
-
-		$ap_cust_no = $this->input->post('ap_cust_no');
-		$ap_service_type = $this->input->post('ap_service_type');
-		$ap_job_id = $this->input->post('ap_job_id');
-		$ap_treatment = $this->input->post('ap_treatment');
-		$ap_date = $this->input->post('ap_date');
-		$ap_alocate_time = $this->input->post('ap_alocate_time');
+		$ap_user_id = "";
+		$ap_sr_id = "";
+		$ap_service = $this->input->post('serviceAndEmp');
+		$splArr = preg_split ("/\_/", $ap_service); 
+		if($splArr){
+			$ap_user_id = $splArr[0];
+			$ap_sr_id = $splArr[1];
+		}
+		
+		$ap_cust_id = $this->input->post('ap_cust_id');
+		
+		$ap_alocate_time = $this->input->post('ap_alocate_time');		
 		$ap_note = $this->input->post('ap_note');
-		$ap_active = $this->input->post('ap_active');
-		$ap_emp_cr_id = $this->input->post('ap_emp_id');
-		$ap_emp_up_id = $this->input->post('ap_emp_id');
+		$ap_emp_cr_id = $ap_user_id;
+		$ap_emp_up_id = $ap_user_id;
 		$ap_is_complete = $this->input->post('ap_is_complete');
-		$ap_time = $this->input->post('ap_time');
+		$ap_user_id = $ap_user_id;
 
-		$insert_to_consultation = array(
+		$ap_start_time = $this->input->post('ap_start_time');
+		$ap_end_time = $this->input->post('ap_end_time');
 
-			'ap_cust_no' => $ap_cust_no,
-			'ap_service_type' => $ap_service_type,
-			'ap_job_id' => $ap_job_id,
-			'ap_treatment' => $ap_treatment,
-			'ap_date' => $ap_date,
-			'ap_alocate_time' => $ap_alocate_time,
+		$ap_alocate_time = $this->getTimeGap($ap_start_time, $ap_end_time);
+
+		$insert_to_appointment = array(
+			'ap_cust_id' => $ap_cust_id,
+			'ap_sr_id' => $ap_sr_id,
 			'ap_note' => $ap_note,
-			'ap_active' => $ap_active,
 			'ap_emp_cr_id' => $ap_emp_cr_id,
-			'ap_emp_up_id' => $ap_emp_up_id,
-			'ap_is_complete' => $ap_is_complete,
-			'ap_created_at' => $ap_time,
-			'ap_updated_at' => $ap_time,
+			'ap_emp_up_id' => $ap_emp_up_id,			
+			'ap_user_id' => $ap_user_id,
+			'ap_start_time' => $ap_start_time,
+			'ap_end_time' => $ap_end_time,
+			'ap_alocate_time' => $ap_alocate_time,
 		);
 
-		$this->db->insert('appointment', $insert_to_consultation);
-
-
+		$this->db->insert('appointment', $insert_to_appointment);
 		return true;
 
 	}
@@ -218,6 +231,27 @@ class Appointments extends CI_Model
 		echo json_encode($events);
 
 	}
+
+	function getTimeGap($start, $end){
+		$startSplit = $this->splitTime($start);
+		$endSplit = $this->splitTime($end);
+		
+		$hrsTimeGap = (int)$endSplit[0] - (int)$startSplit[0];
+		$minsTimeGap = (int)$endSplit[1] - (int)$startSplit[1];
+		
+		$timeStr = "".$hrsTimeGap." Hrs ".abs($minsTimeGap)." Mins";
+		
+		return $timeStr;
+	  }
+	  
+	  
+	  function splitTime($time){
+		$fSplit = preg_split("/\:/", $time);
+		$hrs = $fSplit[0];
+		$mins = preg_split("/\ /", $fSplit[1])[0];
+		$tArray = [$hrs, $mins];
+		return $tArray;
+	  }
 
 }
 
