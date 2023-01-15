@@ -280,7 +280,7 @@ function addApointment2(str) {
      newButton.setAttribute("id", `button_${element.ap_user_id}_${element.ap_start_time}_${element.ap_cust_id}`);
      newButton.setAttribute("class", "btn btn-primary");
      newButton.innerHTML = `${element.cust_name} <br> Jb: ${element.ap_job_id} - Srv: ${element.sr_id} <br> ${element.ap_alocate_time}`;
-     startTimeElement.innerHTML= "";
+     //startTimeElement.innerHTML= "";
      startTimeElement.style.background='#f9ca24';
      startTimeElement.appendChild(newButton);
 
@@ -300,7 +300,7 @@ function addApointment2(str) {
 
      for (let k = startIndex+1; k < endIndex; k++) {        
         document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).style.background='#f9ca24';
-        document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).innerHTML = "";
+        //document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).innerHTML = "";
         var dd = document.createElement('button');
         dd.innerHTML = `Jb: ${element.ap_job_id}`;
         dd.setAttribute("class", "btn btn-primary");
