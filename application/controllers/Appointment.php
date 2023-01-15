@@ -30,7 +30,18 @@ class Appointment extends CI_Controller
         $this->load->model('customers');       
         $data['retrieveCustomers'] = $this->customers->retrieveCustomers();
 
-        $data['hoursRange'] = $this->generateHoursRange();
+        $arrHours = $this->generateHoursRange();
+        
+        //$newHoursArr = array();
+        // foreach($arrHours as $key => $val){
+        //     if (isset($arrHours[$key+1])) {
+        //         $newHoursArr[$key] = "".$arrHours[$key]." - ".$arrHours[$key+1]."";
+        //      } else {               
+        //      }          
+        // }
+        // $data['hoursRangeFormatted'] = $newHoursArr;
+        $data['hoursRange'] = $arrHours;
+      
 
         $this->load->view('templates/header');
         $this->load->view('templates/sidebar');

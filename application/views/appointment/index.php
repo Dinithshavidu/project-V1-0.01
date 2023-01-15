@@ -53,14 +53,14 @@
                   <label>Start Time</label>
                   <select id="ap_start_time" name="ap_start_time"
                       class="form-control select2bs4" style="width: 100%;">
-                      <option value="4.00 AM">4:00 AM</option>
-                      <option value="4.30 AM">4:30 AM</option>
-                      <option value="5.00 AM">5:00 AM</option>
-                      <option value="5.30 AM">5:30 AM</option>
-                      <option value="6.00 AM">6:00 AM</option>
-                      <option value="6.30 AM">6:30 AM</option>
-                      <option value="7.00 AM">7:00 AM</option>
-                      <option value="7.30 AM">7:30 AM</option>
+                      <option value="4:00 AM">4:00 AM</option>
+                      <option value="4:30 AM">4:30 AM</option>
+                      <option value="5:00 AM">5:00 AM</option>
+                      <option value="5:30 AM">5:30 AM</option>
+                      <option value="6:00 AM">6:00 AM</option>
+                      <option value="6:30 AM">6:30 AM</option>
+                      <option value="7:00 AM">7:00 AM</option>
+                      <option value="7:30 AM">7:30 AM</option>
                   </select>
                 </div>
 
@@ -68,14 +68,14 @@
                   <label>End Time</label>
                   <select id="ap_end_time" name="ap_end_time"
                       class="form-control select2bs4" style="width: 100%;">
-                      <option value="4.00 AM">4:00 AM</option>
-                      <option value="4.30 AM">4:30 AM</option>
-                      <option value="5.00 AM">5:00 AM</option>
-                      <option value="5.30 AM">5:30 AM</option>
-                      <option value="6.00 AM">6:00 AM</option>
-                      <option value="6.30 AM">6:30 AM</option>
-                      <option value="7.00 AM">7:00 AM</option>
-                      <option value="7.30 AM">7:30 AM</option>
+                      <option value="4:00 AM">4:00 AM</option>
+                      <option value="4:30 AM">4:30 AM</option>
+                      <option value="5:00 AM">5:00 AM</option>
+                      <option value="5:30 AM">5:30 AM</option>
+                      <option value="6:00 AM">6:00 AM</option>
+                      <option value="6:30 AM">6:30 AM</option>
+                      <option value="7:00 AM">7:00 AM</option>
+                      <option value="7:30 AM">7:30 AM</option>
                   </select>
                 </div>
 
@@ -170,26 +170,29 @@
                 <tbody>
 
                <?php 
-                    $i = 1;                    
+                    $k = 0;                    
                     foreach ($hoursRange as $hrs) { 
                         ?>
                 <tr>   
                   <td class="timeValue">
                     <span>
-                  <?php echo $hrs; ?>   
+                  <?php echo $hrs; ?> 
+                  <!-- <
+                    ?php echo $hoursRangeFormatted[$k]; ?>     -->
                   </span>      
                   </td>               
                     <?php
-                    $i = 1;                    
+                                    
                     foreach ($allUsers as $userData) { ?>
                         <td scope="col" id="<?php echo  $userData->user_id; ?>_<?php echo $hrs; ?>" class="tableCell" onload="showIndexOfCell(this)">
                             AVAILABLE
                         </td>
-                        <?php $i++;
+                        <?php 
                             }
                     ?>   
                     </tr>
                     <?php
+                    $k++;
                      } 
                     ?>
                 </tbody>
@@ -271,9 +274,10 @@ function addApointment2(str) {
     //  startTimeElement.style.background='#f9ca24';
     //  startTimeElement.innerHTML= `${element.cust_name} <br> ${element.sr_name} <br> ${element.ap_alocate_time}`;
      //endTimeElement.style.background='#f9ca24';
+     console.log(88888, `${element.ap_user_id}_${element.ap_start_time}`);
 
      newButton = document.createElement('button');
-     newButton.setAttribute("id", `button_${element.ap_user_id}_${element.ap_start_time}`);
+     newButton.setAttribute("id", `button_${element.ap_user_id}_${element.ap_start_time}_${element.ap_cust_id}`);
      newButton.setAttribute("class", "btn btn-primary");
      newButton.innerHTML = `${element.cust_name} <br> Jb: ${element.ap_job_id} - Srv: ${element.sr_id} <br> ${element.ap_alocate_time}`;
      startTimeElement.innerHTML= "";
