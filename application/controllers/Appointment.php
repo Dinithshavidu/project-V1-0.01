@@ -21,12 +21,27 @@ class Appointment extends CI_Controller
         
         $this->load->model('appointments');
         $data['usersdata'] = $this->appointments->get_all_users_formatted();
+        $data['usersWithServices'] = $this->appointments->getUserServiceRelation();
+        $data['allApointments'] = $this->appointments->getAllApointments();
 
-        $this->load->model('customers');
-        //$data['customerData'] = $this->customers->get_all_customers_formatted();
+        $this->load->model('users');
+        $data['allUsers'] = $this->users->get_all_users_without_superAdmin();
+
+        $this->load->model('customers');       
         $data['retrieveCustomers'] = $this->customers->retrieveCustomers();
 
-        $data['hoursRange'] = $this->generateHoursRange();
+        $arrHours = $this->generateHoursRange();
+        
+        //$newHoursArr = array();
+        // foreach($arrHours as $key => $val){
+        //     if (isset($arrHours[$key+1])) {
+        //         $newHoursArr[$key] = "".$arrHours[$key]." - ".$arrHours[$key+1]."";
+        //      } else {               
+        //      }          
+        // }
+        // $data['hoursRangeFormatted'] = $newHoursArr;
+        $data['hoursRange'] = $arrHours;
+      
 
         $this->load->view('templates/header');
         $this->load->view('templates/sidebar');
@@ -52,6 +67,14 @@ class Appointment extends CI_Controller
             $times[(string) $increment] = $date->format( $format );
         }
         return $times;
+    }
+
+    public function insertApointment() {
+        $this->load->model('appointments');
+        $insertApointment = $this->appointments->new_appointment_insert();
+        if($insertApointment){
+            redirect('appointment/');
+        }
     }
     
   

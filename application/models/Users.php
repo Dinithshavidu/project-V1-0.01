@@ -8,6 +8,12 @@ class Users extends CI_Model
 		return $this->db->get_where('users', $arr)->row();
 	}
 
+	public function get_all_users_without_superAdmin()
+	{
+		$arr['user_role !='] = 1;
+		return $this->db->get_where('users', $arr)->result();
+	}
+
 	public function get_all_users()
 	{
 		return $this->db->get_where('users')->result();
