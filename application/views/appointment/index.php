@@ -11,6 +11,10 @@
     background-color: #00d2d3;
 }
 
+.apointmentBtn{
+  margin-right: 5px;
+}
+
 
 </style>
 
@@ -268,7 +272,7 @@ function addApointment2(str) {
      let endTimeElement;
      let newButton;
 
-  appoitmentData.forEach((element)=>{
+     appoitmentData.forEach((element)=>{
      startTimeElement =  document.getElementById(`${element.ap_user_id}_${element.ap_start_time}`);
      endTimeElement = document.getElementById(`${element.ap_user_id}_${element.ap_end_time}`);
     //  startTimeElement.style.background='#f9ca24';
@@ -278,10 +282,11 @@ function addApointment2(str) {
 
      newButton = document.createElement('button');
      newButton.setAttribute("id", `button_${element.ap_user_id}_${element.ap_start_time}_${element.ap_cust_id}`);
-     newButton.setAttribute("class", "btn btn-primary");
+     newButton.setAttribute("class", "btn btn-primary apointmentBtn");
      newButton.innerHTML = `${element.cust_name} <br> Jb: ${element.ap_job_id} - Srv: ${element.sr_id} <br> ${element.ap_alocate_time}`;
      //startTimeElement.innerHTML= "";
-     startTimeElement.style.background='#f9ca24';
+     startTimeElement.style.background= '#f9ca24'; 
+     // #f9ca24';
      startTimeElement.appendChild(newButton);
 
 
@@ -303,7 +308,7 @@ function addApointment2(str) {
         //document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).innerHTML = "";
         var dd = document.createElement('button');
         dd.innerHTML = `Jb: ${element.ap_job_id}`;
-        dd.setAttribute("class", "btn btn-primary");
+        dd.setAttribute("class", "btn btn-primary apointmentBtn");
         document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).appendChild(dd);
       } 
   
