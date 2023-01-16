@@ -1,6 +1,11 @@
 
 <head>
 <style>
+
+/* .tableCell{
+  vertical-align: top;
+} */
+
 .tableCell:hover{
     cursor: pointer !important;
     background-color: #f6e58d;
@@ -189,7 +194,7 @@
                                     
                     foreach ($allUsers as $userData) { ?>
                         <td scope="col" id="<?php echo  $userData->user_id; ?>_<?php echo $hrs; ?>" class="tableCell" onload="showIndexOfCell(this)">
-                            AVAILABLE
+                            <!-- AVAILABLE -->
                         </td>
                         <?php 
                             }
@@ -283,6 +288,7 @@ function addApointment2(str) {
      newButton = document.createElement('button');
      newButton.setAttribute("id", `button_${element.ap_user_id}_${element.ap_start_time}_${element.ap_cust_id}`);
      newButton.setAttribute("class", "btn btn-primary apointmentBtn");
+     newButton.style.background = `${element.ap_color}`;
      newButton.innerHTML = `${element.cust_name} <br> Jb: ${element.ap_job_id} - Srv: ${element.sr_id} <br> ${element.ap_alocate_time}`;
      //startTimeElement.innerHTML= "";
      startTimeElement.style.background= '#f9ca24'; 
@@ -302,12 +308,17 @@ function addApointment2(str) {
       i++;
      });
 
+     var gapIndex = endIndex-startIndex;
+     //startTimeElement.setAttribute("rowspan", `${gapIndex}`);
 
      for (let k = startIndex+1; k < endIndex; k++) {        
         document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).style.background='#f9ca24';
-        //document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).innerHTML = "";
+        // if(document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).hasChildNodes()){
+        //   document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).innerHTML = "";
+        // }       
         var dd = document.createElement('button');
         dd.innerHTML = `Jb: ${element.ap_job_id}`;
+        dd.style.background = `${element.ap_color}`;
         dd.setAttribute("class", "btn btn-primary apointmentBtn");
         document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).appendChild(dd);
       } 

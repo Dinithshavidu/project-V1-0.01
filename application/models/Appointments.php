@@ -102,6 +102,8 @@ class Appointments extends CI_Model
 
 		$ap_alocate_time = $this->getTimeGap($ap_start_time, $ap_end_time);
 
+		$apColor = $sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+
 		$insert_to_appointment = array(
 			'ap_cust_id' => $ap_cust_id,
 			'ap_sr_id' => $ap_sr_id,
@@ -112,6 +114,7 @@ class Appointments extends CI_Model
 			'ap_start_time' => $ap_start_time,
 			'ap_end_time' => $ap_end_time,
 			'ap_alocate_time' => $ap_alocate_time,
+			'ap_color' => $apColor,
 		);
 
 		$this->db->insert('appointment', $insert_to_appointment);
