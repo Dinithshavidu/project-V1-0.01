@@ -8,7 +8,7 @@
   white-space: nowrap;
   margin-right: 0px !important;
   border: 1px solid #d3dceb;
-  /* border-color: "#fc8a51"; */
+  text-align: right;
 }
 
 /* .tableCell:hover{
@@ -301,6 +301,7 @@ function addApointment2(str) {
      newButton.innerHTML = `${element.cust_name} <br> Jb: ${element.ap_job_id} - Srv: ${element.sr_id} <br> ${element.ap_alocate_time}`;
      //startTimeElement.innerHTML= "";
      startTimeElement.style.background= '#E5E4E2'; 
+     startTimeElement.style["text-align"] = "left"; 
      // #f9ca24';
      startTimeElement.appendChild(newButton);
 
