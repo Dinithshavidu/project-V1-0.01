@@ -266,7 +266,8 @@ function addApointment2(str) {
      //startTimeElement.innerHTML= "";
      startTimeElement.style.background= '#E5E4E2'; 
      startTimeElement.style["text-align"] = "left"; 
-     // #f9ca24';
+     //startTimeElement.style["border-bottom"] =  `1px solid ${element.ap_color}`;
+     
      startTimeElement.appendChild(newButton);
 
 
@@ -287,12 +288,11 @@ function addApointment2(str) {
 
      for (let k = startIndex+1; k < endIndex; k++) {        
         document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).style.background='#E5E4E2';
-        // if(document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).hasChildNodes()){
-        //   document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).innerHTML = "";
-        // }       
+       
         var dd = document.createElement('button');
         dd.innerHTML = `Jb: ${element.ap_job_id}`;
         dd.style.background = `${element.ap_color}`;
+       // dd.style["border-bottom"] = `1px solid ${element.ap_color}`;
         dd.setAttribute("class", "btn btn-primary apointmentBtn");
         document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).appendChild(dd);
       } 
