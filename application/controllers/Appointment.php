@@ -23,6 +23,7 @@ class Appointment extends CI_Controller
         $data['usersdata'] = $this->appointments->get_all_users_formatted();
         $data['usersWithServices'] = $this->appointments->getUserServiceRelation();
         $data['allApointments'] = $this->appointments->getAllApointments();
+        $timeStartEnd = $this->appointments->getTimeStartEnd();
 
         $this->load->model('users');
         $data['allUsers'] = $this->users->get_all_users_without_superAdmin();
@@ -30,7 +31,17 @@ class Appointment extends CI_Controller
         $this->load->model('customers');       
         $data['retrieveCustomers'] = $this->customers->retrieveCustomers();
 
-        $arrHours = $this->generateHoursRange();
+
+        $tStart;
+        $tEnd;
+
+        foreach($timeStartEnd as $tt){
+            $tStart = $tt->tm_start;
+            $tEnd = $tt->tm_end;
+        }
+
+
+        $arrHours = $this->generateHoursRange($tStart, $tEnd);
         
         //$newHoursArr = array();
         // foreach($arrHours as $key => $val){

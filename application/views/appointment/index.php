@@ -1,18 +1,39 @@
 
 <head>
 <style>
-.tableCell:hover{
-    cursor: pointer !important;
-    background-color: #f6e58d;
+
+.tableCell{
+  padding: 0px !important;
+  /* width: 100% !important; */
+  white-space: nowrap;
+  margin-right: 0px !important;
+  border: 1px solid #d3dceb;
+  text-align: right;
 }
 
+/* .tableCell:hover{
+    cursor: pointer !important;
+    background-color: #f6e58d;
+} */
+
 .timeValue {
-    padding-top: -20 !important;
-    background-color: #00d2d3;
+    background-color: #fc8a51;
+    height: 80px;
+    vertical-align: top;
 }
 
 .apointmentBtn{
-  margin-right: 5px;
+  width: 120px;
+  height: 80px;
+  border-top: 0px !important;
+  border-left: 0px !important;
+  border-right: 0px !important;
+  border-radius: 0px !important;
+}
+
+.apointmentTable{
+  overflow-x: scroll;
+  width: auto;
 }
 
 
@@ -57,14 +78,13 @@
                   <label>Start Time</label>
                   <select id="ap_start_time" name="ap_start_time"
                       class="form-control select2bs4" style="width: 100%;">
-                      <option value="4:00 AM">4:00 AM</option>
-                      <option value="4:30 AM">4:30 AM</option>
-                      <option value="5:00 AM">5:00 AM</option>
-                      <option value="5:30 AM">5:30 AM</option>
-                      <option value="6:00 AM">6:00 AM</option>
-                      <option value="6:30 AM">6:30 AM</option>
-                      <option value="7:00 AM">7:00 AM</option>
-                      <option value="7:30 AM">7:30 AM</option>
+                      <?php 
+                      foreach($hoursRange as $hrData){
+                          ?>
+                        <option value="<?php echo $hrData; ?>"><?php echo $hrData; ?></option>
+                      <?php
+                      }                      
+                      ?>
                   </select>
                 </div>
 
@@ -72,14 +92,13 @@
                   <label>End Time</label>
                   <select id="ap_end_time" name="ap_end_time"
                       class="form-control select2bs4" style="width: 100%;">
-                      <option value="4:00 AM">4:00 AM</option>
-                      <option value="4:30 AM">4:30 AM</option>
-                      <option value="5:00 AM">5:00 AM</option>
-                      <option value="5:30 AM">5:30 AM</option>
-                      <option value="6:00 AM">6:00 AM</option>
-                      <option value="6:30 AM">6:30 AM</option>
-                      <option value="7:00 AM">7:00 AM</option>
-                      <option value="7:30 AM">7:30 AM</option>
+                      <?php 
+                      foreach($hoursRange as $hrData){
+                          ?>
+                        <option value="<?php echo $hrData; ?>"><?php echo $hrData; ?></option>
+                      <?php
+                      }                      
+                      ?>
                   </select>
                 </div>
 
@@ -127,16 +146,19 @@
   </div>
 </div>
 
+
   <section class="content">
+
+ 
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Sections</h3>
+              <h2 class="card-title"><?php echo date("Y/m/d"); ?></h2>
               <div align="right">
-               <a type="button" class="btn btn-warning"  onclick="addApointment2()">  
-                  Add Appointment to Nirmala 4.30 - 5.30
+                 <a type="button" class="btn btn-warning">  
+                  Change Date
                 </a>
 
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
@@ -144,11 +166,7 @@
                 </button>
 
               </div>              
-              <div class="form-group">
-                <h2 id="cellCol">CELL ROW INDEX</h2>
-                <h2 id="cellRow">CELL ROW INDEX</h2>               
-              </div>
-            </div>
+             
          </div>
 
   <div class="row">
@@ -156,7 +174,7 @@
           <div class="card">
             <div class="card-header">             
             <div class="table-responsive">
-                <table class="table">
+                <table class="table apointmentTable">
                 <thead>
                 <tr>
                 <th> ###### </th>
@@ -189,7 +207,7 @@
                                     
                     foreach ($allUsers as $userData) { ?>
                         <td scope="col" id="<?php echo  $userData->user_id; ?>_<?php echo $hrs; ?>" class="tableCell" onload="showIndexOfCell(this)">
-                            AVAILABLE
+                            <!-- AVAILABLE -->
                         </td>
                         <?php 
                             }
@@ -221,53 +239,14 @@ function addApointment2(str) {
 
   var appoitmentData = <?php echo json_encode($allApointments); ?>;  
 
-  console.log(787878, appoitmentData);
- 
-  let timeArr = [
-      "3:00 AM",
-      "3:30 AM",
-      "4:00 AM",
-      "4:30 AM",
-      "5:00 AM",
-      "5:30 AM",
-      "6:00 AM",
-      "6:30 AM",
-      "7:00 AM",
-      "7:30 AM",
-      "8:00 AM",
-      "8:30 AM",
-      "9:00 AM",
-      "9:30 AM",
-      "10.00 AM",
-      "10.30 AM",
-      "11:00 AM",
-      "11:30 AM",
-      "12:00 AM",
-      "12:30 AM",
-      "1:00 AM",
-      "1:30 AM",
-      "2:00 AM",
-      "2:30 AM",
-      "3:00 PM",
-      "3:30 PM",
-      "4:00 PM",
-      "4:30 PM",
-      "5:00 PM",
-      "5:30 PM",
-      "6:00 PM",
-      "6:30 PM",
-      "7:00 PM",
-      "7:30 PM",
-      "8:00 PM",
-      "8:30 PM",
-      "9:00 PM",
-      "9:30 PM",
-      "10.00 PM",
-      "10.30 PM",
-      "11:00 PM",
-      "11:30 PM",
-     ];
+  let timeArrFromPhp = <?php echo json_encode($hoursRange); ?>
 
+  let timeArr = [];
+  for(const ele in timeArrFromPhp){
+    timeArr.push(timeArrFromPhp[ele]);
+  }
+
+ 
      let startTimeElement;
      let endTimeElement;
      let newButton;
@@ -283,10 +262,14 @@ function addApointment2(str) {
      newButton = document.createElement('button');
      newButton.setAttribute("id", `button_${element.ap_user_id}_${element.ap_start_time}_${element.ap_cust_id}`);
      newButton.setAttribute("class", "btn btn-primary apointmentBtn");
+     newButton.style.background = `${element.ap_color}`;
      newButton.innerHTML = `${element.cust_name} <br> Jb: ${element.ap_job_id} - Srv: ${element.sr_id} <br> ${element.ap_alocate_time}`;
-     //startTimeElement.innerHTML= "";
-     startTimeElement.style.background= '#f9ca24'; 
-     // #f9ca24';
+     newButton.style["border-bottom"] =  `1px solid ${element.ap_color} !important`;
+     
+     startTimeElement.style.background= '#E5E4E2'; 
+     startTimeElement.style["text-align"] = "left"; 
+    
+     
      startTimeElement.appendChild(newButton);
 
 
@@ -302,12 +285,16 @@ function addApointment2(str) {
       i++;
      });
 
+     var gapIndex = endIndex-startIndex;
+     //startTimeElement.setAttribute("rowspan", `${gapIndex}`);
 
      for (let k = startIndex+1; k < endIndex; k++) {        
-        document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).style.background='#f9ca24';
-        //document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).innerHTML = "";
+        document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).style.background='#E5E4E2';
+       
         var dd = document.createElement('button');
         dd.innerHTML = `Jb: ${element.ap_job_id}`;
+        dd.style.background = `${element.ap_color}`;
+       // dd.style["border-bottom"] = `1px solid ${element.ap_color}`;
         dd.setAttribute("class", "btn btn-primary apointmentBtn");
         document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).appendChild(dd);
       } 

@@ -23,6 +23,11 @@ class Appointments extends CI_Model
 		return $query;
 	}
 
+	public function getTimeStartEnd()
+	{
+		$query = $this->db->get("time_slots")->result();
+		return $query;
+	}
 
 	public function new_consultation_insert()
 	{
@@ -102,6 +107,8 @@ class Appointments extends CI_Model
 
 		$ap_alocate_time = $this->getTimeGap($ap_start_time, $ap_end_time);
 
+		$apColor = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+
 		$insert_to_appointment = array(
 			'ap_cust_id' => $ap_cust_id,
 			'ap_sr_id' => $ap_sr_id,
@@ -112,6 +119,7 @@ class Appointments extends CI_Model
 			'ap_start_time' => $ap_start_time,
 			'ap_end_time' => $ap_end_time,
 			'ap_alocate_time' => $ap_alocate_time,
+			'ap_color' => $apColor,
 		);
 
 		$this->db->insert('appointment', $insert_to_appointment);
@@ -238,8 +246,19 @@ class Appointments extends CI_Model
 		
 		$hrsTimeGap = (int)$endSplit[0] - (int)$startSplit[0];
 		$minsTimeGap = (int)$endSplit[1] - (int)$startSplit[1];
+
+		$hrsString = "";
+		$minString = "";
 		
-		$timeStr = "".$hrsTimeGap." Hrs ".abs($minsTimeGap)." Mins";
+		if($hrsTimeGap > 0){
+			$hrsString = "".$hrsTimeGap." Hrs";
+		}
+
+		if($minsTimeGap > 0){
+			$minString = "".abs($minsTimeGap)." Mins";
+		}
+
+		$timeStr = "".($hrsString)."".$minString."";
 		
 		return $timeStr;
 	  }
