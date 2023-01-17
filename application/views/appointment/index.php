@@ -4,23 +4,35 @@
 
 .tableCell{
   padding: 0px !important;
+  /* width: 100% !important; */
+  white-space: nowrap;
+  margin-right: 0px !important;
+  border: 1px solid #d3dceb;
+  /* border-color: "#fc8a51"; */
 }
 
-.:hover{
+/* .tableCell:hover{
     cursor: pointer !important;
     background-color: #f6e58d;
-}
+} */
 
 .timeValue {
-    background-color: #00d2d3;
+    background-color: #fc8a51;
+    height: 80px;
+    vertical-align: top;
 }
 
 .apointmentBtn{
-  margin-right: 5px;
-  width: 150px;
+  /* margin-right: 5px; */
+  width: 120px;
   height: 80px;
   border: 0px !important;
   border-radius: 0px !important;
+}
+
+.apointmentTable{
+  overflow-x: scroll;
+  width: auto;
 }
 
 
@@ -141,10 +153,10 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Sections</h3>
+              <h2 class="card-title"><?php echo date("Y/m/d"); ?></h2>
               <div align="right">
-               <a type="button" class="btn btn-warning"  onclick="addApointment2()">  
-                  Add Appointment to Nirmala 4.30 - 5.30
+                 <a type="button" class="btn btn-warning">  
+                  Change Date
                 </a>
 
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
@@ -152,11 +164,7 @@
                 </button>
 
               </div>              
-              <div class="form-group">
-                <h2 id="cellCol">CELL ROW INDEX</h2>
-                <h2 id="cellRow">CELL ROW INDEX</h2>               
-              </div>
-            </div>
+             
          </div>
 
   <div class="row">
@@ -164,7 +172,7 @@
           <div class="card">
             <div class="card-header">             
             <div class="table-responsive">
-                <table class="table">
+                <table class="table apointmentTable">
                 <thead>
                 <tr>
                 <th> ###### </th>
@@ -229,8 +237,6 @@ function addApointment2(str) {
 
   var appoitmentData = <?php echo json_encode($allApointments); ?>;  
 
-  console.log(787878, appoitmentData);
- 
   let timeArr = [
       "3:00 AM",
       "3:30 AM",
@@ -294,7 +300,7 @@ function addApointment2(str) {
      newButton.style.background = `${element.ap_color}`;
      newButton.innerHTML = `${element.cust_name} <br> Jb: ${element.ap_job_id} - Srv: ${element.sr_id} <br> ${element.ap_alocate_time}`;
      //startTimeElement.innerHTML= "";
-     startTimeElement.style.background= '#f9ca24'; 
+     startTimeElement.style.background= '#E5E4E2'; 
      // #f9ca24';
      startTimeElement.appendChild(newButton);
 
@@ -315,7 +321,7 @@ function addApointment2(str) {
      //startTimeElement.setAttribute("rowspan", `${gapIndex}`);
 
      for (let k = startIndex+1; k < endIndex; k++) {        
-        document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).style.background='#f9ca24';
+        document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).style.background='#E5E4E2';
         // if(document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).hasChildNodes()){
         //   document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).innerHTML = "";
         // }       

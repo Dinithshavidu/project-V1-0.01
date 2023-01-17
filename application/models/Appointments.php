@@ -241,8 +241,19 @@ class Appointments extends CI_Model
 		
 		$hrsTimeGap = (int)$endSplit[0] - (int)$startSplit[0];
 		$minsTimeGap = (int)$endSplit[1] - (int)$startSplit[1];
+
+		$hrsString = "";
+		$minString = "";
 		
-		$timeStr = "".$hrsTimeGap." Hrs ".abs($minsTimeGap)." Mins";
+		if($hrsTimeGap > 0){
+			$hrsString = "".$hrsTimeGap." Hrs";
+		}
+
+		if($minsTimeGap > 0){
+			$minString = "".abs($minsTimeGap)." Mins";
+		}
+
+		$timeStr = "".($hrsString)."".$minString."";
 		
 		return $timeStr;
 	  }
