@@ -23,6 +23,11 @@ class Appointments extends CI_Model
 		return $query;
 	}
 
+	public function getTimeStartEnd()
+	{
+		$query = $this->db->get("time_slots")->result();
+		return $query;
+	}
 
 	public function new_consultation_insert()
 	{

@@ -77,14 +77,13 @@
                   <label>Start Time</label>
                   <select id="ap_start_time" name="ap_start_time"
                       class="form-control select2bs4" style="width: 100%;">
-                      <option value="4:00 AM">4:00 AM</option>
-                      <option value="4:30 AM">4:30 AM</option>
-                      <option value="5:00 AM">5:00 AM</option>
-                      <option value="5:30 AM">5:30 AM</option>
-                      <option value="6:00 AM">6:00 AM</option>
-                      <option value="6:30 AM">6:30 AM</option>
-                      <option value="7:00 AM">7:00 AM</option>
-                      <option value="7:30 AM">7:30 AM</option>
+                      <?php 
+                      foreach($hoursRange as $hrData){
+                          ?>
+                        <option value="<?php echo $hrData; ?>"><?php echo $hrData; ?></option>
+                      <?php
+                      }                      
+                      ?>
                   </select>
                 </div>
 
@@ -92,14 +91,13 @@
                   <label>End Time</label>
                   <select id="ap_end_time" name="ap_end_time"
                       class="form-control select2bs4" style="width: 100%;">
-                      <option value="4:00 AM">4:00 AM</option>
-                      <option value="4:30 AM">4:30 AM</option>
-                      <option value="5:00 AM">5:00 AM</option>
-                      <option value="5:30 AM">5:30 AM</option>
-                      <option value="6:00 AM">6:00 AM</option>
-                      <option value="6:30 AM">6:30 AM</option>
-                      <option value="7:00 AM">7:00 AM</option>
-                      <option value="7:30 AM">7:30 AM</option>
+                      <?php 
+                      foreach($hoursRange as $hrData){
+                          ?>
+                        <option value="<?php echo $hrData; ?>"><?php echo $hrData; ?></option>
+                      <?php
+                      }                      
+                      ?>
                   </select>
                 </div>
 
@@ -147,7 +145,10 @@
   </div>
 </div>
 
+
   <section class="content">
+
+ 
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
@@ -237,51 +238,14 @@ function addApointment2(str) {
 
   var appoitmentData = <?php echo json_encode($allApointments); ?>;  
 
-  let timeArr = [
-      "3:00 AM",
-      "3:30 AM",
-      "4:00 AM",
-      "4:30 AM",
-      "5:00 AM",
-      "5:30 AM",
-      "6:00 AM",
-      "6:30 AM",
-      "7:00 AM",
-      "7:30 AM",
-      "8:00 AM",
-      "8:30 AM",
-      "9:00 AM",
-      "9:30 AM",
-      "10.00 AM",
-      "10.30 AM",
-      "11:00 AM",
-      "11:30 AM",
-      "12:00 AM",
-      "12:30 AM",
-      "1:00 AM",
-      "1:30 AM",
-      "2:00 AM",
-      "2:30 AM",
-      "3:00 PM",
-      "3:30 PM",
-      "4:00 PM",
-      "4:30 PM",
-      "5:00 PM",
-      "5:30 PM",
-      "6:00 PM",
-      "6:30 PM",
-      "7:00 PM",
-      "7:30 PM",
-      "8:00 PM",
-      "8:30 PM",
-      "9:00 PM",
-      "9:30 PM",
-      "10.00 PM",
-      "10.30 PM",
-      "11:00 PM",
-      "11:30 PM",
-     ];
+  let timeArrFromPhp = <?php echo json_encode($hoursRange); ?>
 
+  let timeArr = [];
+  for(const ele in timeArrFromPhp){
+    timeArr.push(timeArrFromPhp[ele]);
+  }
+
+ 
      let startTimeElement;
      let endTimeElement;
      let newButton;
