@@ -23,10 +23,11 @@
 }
 
 .apointmentBtn{
-  /* margin-right: 5px; */
   width: 120px;
   height: 80px;
-  border: 0px !important;
+  border-top: 0px !important;
+  border-left: 0px !important;
+  border-right: 0px !important;
   border-radius: 0px !important;
 }
 
@@ -263,10 +264,11 @@ function addApointment2(str) {
      newButton.setAttribute("class", "btn btn-primary apointmentBtn");
      newButton.style.background = `${element.ap_color}`;
      newButton.innerHTML = `${element.cust_name} <br> Jb: ${element.ap_job_id} - Srv: ${element.sr_id} <br> ${element.ap_alocate_time}`;
-     //startTimeElement.innerHTML= "";
+     newButton.style["border-bottom"] =  `1px solid ${element.ap_color} !important`;
+     
      startTimeElement.style.background= '#E5E4E2'; 
      startTimeElement.style["text-align"] = "left"; 
-     //startTimeElement.style["border-bottom"] =  `1px solid ${element.ap_color}`;
+    
      
      startTimeElement.appendChild(newButton);
 
