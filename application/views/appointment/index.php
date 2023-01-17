@@ -2,22 +2,25 @@
 <head>
 <style>
 
-/* .tableCell{
-  vertical-align: top;
-} */
+.tableCell{
+  padding: 0px !important;
+}
 
-.tableCell:hover{
+.:hover{
     cursor: pointer !important;
     background-color: #f6e58d;
 }
 
 .timeValue {
-    padding-top: -20 !important;
     background-color: #00d2d3;
 }
 
 .apointmentBtn{
   margin-right: 5px;
+  width: 150px;
+  height: 80px;
+  border: 0px !important;
+  border-radius: 0px !important;
 }
 
 
