@@ -116,6 +116,8 @@ class Appointments extends CI_Model
 
 		$apColor = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
 
+		$ap_date = $this->input->post('ap_date');
+
 		$insert_to_appointment = array(
 			'ap_cust_id' => $ap_cust_id,
 			'ap_sr_id' => $ap_sr_id,
@@ -127,6 +129,7 @@ class Appointments extends CI_Model
 			'ap_end_time' => $ap_end_time,
 			'ap_alocate_time' => $ap_alocate_time,
 			'ap_color' => $apColor,
+			'ap_date' => $ap_date,
 		);
 
 		$this->db->insert('appointment', $insert_to_appointment);
@@ -261,11 +264,11 @@ class Appointments extends CI_Model
 			$hrsString = "".$hrsTimeGap." Hrs";
 		}
 
-		if($minsTimeGap > 0){
+		if($minsTimeGap > 0 || $minsTimeGap === -30){
 			$minString = "".abs($minsTimeGap)." Mins";
 		}
 
-		$timeStr = "".($hrsString)."".$minString."";
+		$timeStr = "".($hrsString)." ".$minString."";
 		
 		return $timeStr;
 	  }

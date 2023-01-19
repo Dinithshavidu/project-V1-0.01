@@ -66,7 +66,7 @@
             <div class="card-body">             
               <div class="form-group">
                   <label>Select Customer</label>
-                <select id="ap_cust_id" name="ap_cust_id" class="form-control select2bs4"  onchange="showCustomer(this.value)" style="width: 100%;">
+                <select id="ap_cust_id" name="ap_cust_id" class="form-control select2bs4"  style="width: 100%;">
                   <option selected="selected" disabled >Select Customer</option>
                   <?php
                   $i = 1;                 
@@ -80,10 +80,16 @@
                 </select>
               </div>
 
+                <div class="form-group selectDate">
+                  <label >Appointment Date</label>
+               
+                    <input type="date" id="ap_date" class="form-control" value="<?php date("Y-m-d"); ?>" name="ap_date" placeholder="">
+                </div>
+
                <div class="form-group">
                   <label>Start Time</label>
                   <select id="ap_start_time" name="ap_start_time"
-                      class="form-control select2bs4" style="width: 100%;">
+                      class="form-control select2bs4" style="width: 100%;" onchange="filterEndTime(this.value);">
                       <?php 
                       foreach($hoursRange as $hrData){
                           ?>
@@ -337,11 +343,25 @@ function changeDateOption()
 }
 
 
-// A $( document ).ready() block.
+function filterEndTime(value)
+{
+   console.log("SELECTED VALUE ", value);
+ 
+   document.querySelectorAll("#ap_end_time option").value = value;
 
-$( document ).ready(function() {
-    console.log( "ready!" );
+  const hrs = value.split(":")[0];
+  const timeR = value.split(":")[1].split(" ")[1];
+
+  document.querySelectorAll("#ap_end_time option").forEach(opt => {
+    const hrsIn = opt.value.split(":")[0];
+    const timeRIn = opt.value.split(":")[1].split(" ")[1];
+   
+    if(timeR === timeRIn && Number(hrs) >= Number(hrsIn)){
+      opt.disabled = true;
+    }
+    
 });
+}
 
 
 
