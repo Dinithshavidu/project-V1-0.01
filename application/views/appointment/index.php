@@ -20,6 +20,7 @@
     background-color: #fc8a51;
     height: 80px;
     vertical-align: top;
+    padding-top: 0px !important;
 }
 
 .apointmentBtn{
@@ -303,6 +304,7 @@ function addApointment2(str) {
 
      var gapIndex = endIndex-startIndex;
      //startTimeElement.setAttribute("rowspan", `${gapIndex}`);
+     let rightElementAlignStart;
 
      for (let k = startIndex+1; k < endIndex; k++) {        
         document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).style.background='#E5E4E2';
@@ -312,8 +314,20 @@ function addApointment2(str) {
         dd.style.background = `${element.ap_color}`;
        // dd.style["border-bottom"] = `1px solid ${element.ap_color}`;
         dd.setAttribute("class", "btn btn-primary apointmentBtn");
+
+        // select index of alignment right loop start index
+        var previousChildCount = document.getElementById(`${element.ap_user_id}_${timeArr[k-1]}`)?.childElementCount;
+        if(previousChildCount && previousChildCount == 2){
+          rightElementAlignStart = k;
+        }
+
         document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).appendChild(dd);
       } 
+
+      // align second elements to right
+      for (let k = rightElementAlignStart; k < endIndex; k++) {     
+        document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).style["text-align"] = "right";
+      }
   
   })
 
