@@ -327,8 +327,7 @@ function addApointment2(str) {
       // align second elements to right
       for (let k = rightElementAlignStart; k < endIndex; k++) {     
         document.getElementById(`${element.ap_user_id}_${timeArr[k]}`).style["text-align"] = "right";
-      }
-  
+      }  
   })
 
 }
