@@ -40,6 +40,11 @@
 
 </style>
 
+  <link rel="stylesheet" href="<?php echo base_url(); ?>plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>plugins/bs-stepper/css/bs-stepper.min.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>plugins/dropzone/min/dropzone.min.css">
+
+
 </head>
 
 <div class="content-wrapper">
@@ -333,15 +338,45 @@ function changeDateOption()
 
 
 // A $( document ).ready() block.
-// $( document ).ready(function() {
-//     console.log( "ready!" );
-// });
+
+$( document ).ready(function() {
+    console.log( "ready!" );
+});
+
+
+
 
 
 
 </script>
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script src="<?php echo base_url(); ?>plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="<?php echo base_url(); ?>plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Select2 -->
+<script src="<?php echo base_url(); ?>plugins/select2/js/select2.full.min.js"></script>
+<!-- Bootstrap4 Duallistbox -->
+<script src="<?php echo base_url(); ?>plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+<!-- InputMask -->
+<script src="<?php echo base_url(); ?>plugins/moment/moment.min.js"></script>
+<script src="<?php echo base_url(); ?>plugins/inputmask/jquery.inputmask.min.js"></script>
+<!-- date-range-picker -->
+<script src="<?php echo base_url(); ?>plugins/daterangepicker/daterangepicker.js"></script>
+<!-- bootstrap color picker -->
+<script src="<?php echo base_url(); ?>plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="<?php echo base_url(); ?>plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- BS-Stepper -->
+<script src="<?php echo base_url(); ?>plugins/bs-stepper/js/bs-stepper.min.js"></script>
+<!-- dropzonejs -->
+<script src="<?php echo base_url(); ?>plugins/dropzone/min/dropzone.min.js"></script>
+<!-- AdminLTE App -->
+<script src="<?php echo base_url(); ?>dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="<?php echo base_url(); ?>dist/js/demo.js"></script>
+<!-- Page specific script -->
+
+
 
 
