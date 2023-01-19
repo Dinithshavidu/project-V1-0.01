@@ -19,6 +19,10 @@ class Appointment extends CI_Controller
     public function index()
     {
         
+        if(!$this->session->userdata('appointmentDateSelected')){
+            $this->session->set_userdata('appointmentDateSelected', date("Y-m-d"));
+        }   
+        
         $this->load->model('appointments');
         $data['usersdata'] = $this->appointments->get_all_users_formatted();
         $data['usersWithServices'] = $this->appointments->getUserServiceRelation();
@@ -87,6 +91,17 @@ class Appointment extends CI_Controller
             redirect('appointment/');
         }
     }
+
+
+    public function changeDateOfAppointmentViewSession(){
+        if(!$this->input->post('dateValue')){
+            return false;
+        }       
+        $dateValue = $this->input->post('dateValue');
+        $this->session->set_userdata('appointmentDateSelected', $dateValue);    
+        //redirect('appointment/');
+    }
+
     
   
 }

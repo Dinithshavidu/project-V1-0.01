@@ -8,7 +8,7 @@
   white-space: nowrap;
   margin-right: 0px !important;
   border: 1px solid #d3dceb;
-  text-align: right;
+  /* text-align: right; */
 }
 
 /* .tableCell:hover{
@@ -37,7 +37,13 @@
 }
 
 
+
 </style>
+
+  <link rel="stylesheet" href="<?php echo base_url(); ?>plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>plugins/bs-stepper/css/bs-stepper.min.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>plugins/dropzone/min/dropzone.min.css">
+
 
 </head>
 
@@ -130,7 +136,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" id="addnew_section" name="addnew_section" class="btn btn-primary">Save changes</button>
+          <button type="submit" id="addnew_appointment" name="addnew_appointment" class="btn btn-primary">Save changes</button>
         </div>
         </form>
       </div>
@@ -155,11 +161,15 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h2 class="card-title"><?php echo date("Y/m/d"); ?></h2>
+              <h2><?php echo $this->session->userdata("appointmentDateSelected"); ?></h2>
               <div align="right">
-                 <a type="button" class="btn btn-warning">  
-                  Change Date
-                </a>
+                
+                <div class="form-group selectDate">
+                  <label >Change View Date</label>
+                  <div class="col-sm-3">
+                    <input type="date" id="dateChange" class="form-control" value="<?php date("Y-m-d"); ?>" name="dateChange" placeholder="" onchange="changeDateOption()">
+                  </div>
+                </div>
 
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
                   Book an Appointment
@@ -265,9 +275,9 @@ function addApointment2(str) {
      newButton.style.background = `${element.ap_color}`;
      newButton.innerHTML = `${element.cust_name} <br> Jb: ${element.ap_job_id} - Srv: ${element.sr_id} <br> ${element.ap_alocate_time}`;
      newButton.style["border-bottom"] =  `1px solid ${element.ap_color} !important`;
-     
+
      startTimeElement.style.background= '#E5E4E2'; 
-     startTimeElement.style["text-align"] = "left"; 
+    //  startTimeElement.style["text-align"] = "left"; 
     
      
      startTimeElement.appendChild(newButton);
@@ -301,12 +311,6 @@ function addApointment2(str) {
   
   })
 
-  // document.getElementById("38_4:30 AM").style.background='#f9ca24';
-  // document.getElementById("38_5:00 AM").style.background='#f9ca24';
-  // document.getElementById("38_5:30 AM").style.background='#f9ca24';
-  // document.getElementById("38_4:30 AM").innerHTML = "topic <br> 4:30 AM"; 
-  // document.getElementById("38_5:00 AM").innerHTML = "-"; 
-  // document.getElementById("38_5:30 AM").innerHTML = "<br> 5:30 AM"; 
 }
 
 
@@ -318,135 +322,61 @@ function showIndexOfCell(x, cust, timeD) {
 }
 
 
-// SELECT OPTIONS
-$(function () {
-    //Initialize Select2 Elements
-    $('.select2').select2()
-
-    //Initialize Select2 Elements
-    $('.select2bs4').select2({
-      theme: 'bootstrap4'
-    })
-
-    //Datemask dd/mm/yyyy
-    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-    //Datemask2 mm/dd/yyyy
-    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
-    //Money Euro
-    $('[data-mask]').inputmask()
-
-    //Date picker
-    $('#reservationdate').datetimepicker({
-        format: 'L'
-    });
-
-    //Date and time picker
-    $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
-
-    //Date range picker
-    $('#reservation').daterangepicker()
-    //Date range picker with time picker
-    $('#reservationtime').daterangepicker({
-      timePicker: true,
-      timePickerIncrement: 30,
-      locale: {
-        format: 'MM/DD/YYYY hh:mm A'
+function changeDateOption()
+{
+  var val = document.getElementById("dateChange").value;
+  $.ajax({
+      type: "POST",
+      url: "<?php echo base_url(); ?>appointment/changeDateOfAppointmentViewSession",
+      data: { dateValue: val },
+      success: function(data){
+        window.location.reload();
       }
-    })
-    //Date range as a button
-    $('#daterange-btn').daterangepicker(
-      {
-        ranges   : {
-          'Today'       : [moment(), moment()],
-          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
-          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
-          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        },
-        startDate: moment().subtract(29, 'days'),
-        endDate  : moment()
-      },
-      function (start, end) {
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-      }
-    )
+     
+  });
+}
 
-    //Timepicker
-    $('#timepicker').datetimepicker({
-      format: 'LT'
-    })
 
-    //Bootstrap Duallistbox
-    $('.duallistbox').bootstrapDualListbox()
+// A $( document ).ready() block.
 
-    //Colorpicker
-    $('.my-colorpicker1').colorpicker()
-    //color picker with addon
-    $('.my-colorpicker2').colorpicker()
+$( document ).ready(function() {
+    console.log( "ready!" );
+});
 
-    $('.my-colorpicker2').on('colorpickerChange', function(event) {
-      $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
-    })
-  })
-  // BS-Stepper Init
-  document.addEventListener('DOMContentLoaded', function () {
-    window.stepper = new Stepper(document.querySelector('.bs-stepper'))
-  })
 
-  // DropzoneJS Demo Code Start
-  Dropzone.autoDiscover = false
 
-  // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
-  var previewNode = document.querySelector("#template")
-  previewNode.id = ""
-  var previewTemplate = previewNode.parentNode.innerHTML
-  previewNode.parentNode.removeChild(previewNode)
 
-  var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-    url: "/target-url", // Set the url
-    thumbnailWidth: 80,
-    thumbnailHeight: 80,
-    parallelUploads: 20,
-    previewTemplate: previewTemplate,
-    autoQueue: false, // Make sure the files aren't queued until manually added
-    previewsContainer: "#previews", // Define the container to display the previews
-    clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
-  })
 
-  myDropzone.on("addedfile", function(file) {
-    // Hookup the start button
-    file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file) }
-  })
-
-  // Update the total progress bar
-  myDropzone.on("totaluploadprogress", function(progress) {
-    document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
-  })
-
-  myDropzone.on("sending", function(file) {
-    // Show the total progress bar when upload starts
-    document.querySelector("#total-progress").style.opacity = "1"
-    // And disable the start button
-    file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
-  })
-
-  // Hide the total progress bar when nothing's uploading anymore
-  myDropzone.on("queuecomplete", function(progress) {
-    document.querySelector("#total-progress").style.opacity = "0"
-  })
-
-  // Setup the buttons for all transfers
-  // The "add files" button doesn't need to be setup because the config
-  // `clickable` has already been specified.
-  document.querySelector("#actions .start").onclick = function() {
-    myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
-  }
-  document.querySelector("#actions .cancel").onclick = function() {
-    myDropzone.removeAllFiles(true)
-  }
-// SELECT OPTIONS
 
 </script>
+
+
+<script src="<?php echo base_url(); ?>plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="<?php echo base_url(); ?>plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Select2 -->
+<script src="<?php echo base_url(); ?>plugins/select2/js/select2.full.min.js"></script>
+<!-- Bootstrap4 Duallistbox -->
+<script src="<?php echo base_url(); ?>plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+<!-- InputMask -->
+<script src="<?php echo base_url(); ?>plugins/moment/moment.min.js"></script>
+<script src="<?php echo base_url(); ?>plugins/inputmask/jquery.inputmask.min.js"></script>
+<!-- date-range-picker -->
+<script src="<?php echo base_url(); ?>plugins/daterangepicker/daterangepicker.js"></script>
+<!-- bootstrap color picker -->
+<script src="<?php echo base_url(); ?>plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="<?php echo base_url(); ?>plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- BS-Stepper -->
+<script src="<?php echo base_url(); ?>plugins/bs-stepper/js/bs-stepper.min.js"></script>
+<!-- dropzonejs -->
+<script src="<?php echo base_url(); ?>plugins/dropzone/min/dropzone.min.js"></script>
+<!-- AdminLTE App -->
+<script src="<?php echo base_url(); ?>dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="<?php echo base_url(); ?>dist/js/demo.js"></script>
+<!-- Page specific script -->
+
+
 
 

@@ -15,10 +15,17 @@ class Appointments extends CI_Model
 
 	public function getAllApointments()
 	{
+
+		$selectArr = array(
+			'ap_date' => $this->session->userdata("appointmentDateSelected"),
+			'ap_active' => 1,
+		);
+
 		$this->db->select("*");
 		$this->db->from('appointment');
 		$this->db->join('customers', 'customers.cust_id = appointment.ap_cust_id');
 		$this->db->join('services', 'services.sr_id = appointment.ap_sr_id');
+		$this->db->where($selectArr);
 		$query = $this->db->get()->result();
 		return $query;
 	}
