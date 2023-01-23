@@ -136,6 +136,5 @@ class Customers extends CI_Model
 
 }
 
-class Customer {}
 
 ?>
