@@ -30,6 +30,21 @@ class Appointments extends CI_Model
 		return $query;
 	}
 
+	public function getAppointmentDataById()
+	{
+		$selectArr = array(
+			'ap_job_id' => $this->input->post('appointmentId')
+		);
+
+		$this->db->select("*");
+		$this->db->from('appointment');
+		$this->db->join('customers', 'customers.cust_id = appointment.ap_cust_id');
+		$this->db->join('services', 'services.sr_id = appointment.ap_sr_id');
+		$this->db->where($selectArr);
+		$query = $this->db->get()->result();
+		return $query;
+	}
+
 	public function getTimeStartEnd()
 	{
 		$query = $this->db->get("time_slots")->result();
@@ -136,6 +151,81 @@ class Appointments extends CI_Model
 		return true;
 
 	}
+
+	public function updateAppointment()
+	{
+
+		$ap_user_id = "";
+		$ap_sr_id = "";
+		$ap_service = $this->input->post('serviceAndEmp');
+		$splArr = preg_split ("/\_/", $ap_service); 
+		if($splArr){
+			$ap_user_id = $splArr[0];
+			$ap_sr_id = $splArr[1];
+		}
+		
+		$ap_cust_id = $this->input->post('ap_cust_id');
+		
+		$ap_alocate_time = $this->input->post('ap_alocate_time');		
+		$ap_note = $this->input->post('ap_note');
+		$ap_emp_cr_id = $ap_user_id;
+		$ap_emp_up_id = $ap_user_id;
+		$ap_is_complete = $this->input->post('ap_is_complete');
+		$ap_user_id = $ap_user_id;
+
+		$ap_start_time = $this->input->post('ap_start_time');
+		$ap_end_time = $this->input->post('ap_end_time');
+
+		$ap_alocate_time = $this->getTimeGap($ap_start_time, $ap_end_time);
+
+		$apColor = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+
+		$ap_date = $this->input->post('ap_date');
+
+		$update_appointment = array(
+			'ap_cust_id' => $ap_cust_id,
+			'ap_sr_id' => $ap_sr_id,
+			'ap_note' => $ap_note,
+			'ap_emp_cr_id' => $ap_emp_cr_id,
+			'ap_emp_up_id' => $ap_emp_up_id,			
+			'ap_user_id' => $ap_user_id,
+			'ap_start_time' => $ap_start_time,
+			'ap_end_time' => $ap_end_time,
+			'ap_alocate_time' => $ap_alocate_time,
+			'ap_color' => $apColor,
+			'ap_date' => $ap_date,
+		);
+
+		$this->db->where('ap_job_id', $this->input->post('update_appointment'));
+		$this->db->update('appointment', $update_appointment);
+		return true;
+
+	}
+
+	public function startJob(){
+		$updateQry = array(
+			'ap_in_progress' => 1,
+			'ap_color' => "#000000"
+		);
+
+		$this->db->where('ap_job_id', $this->input->post('ap_job_id'));
+		$this->db->update('appointment', $updateQry);
+		return true;
+	}
+
+	public function finishJob(){
+		$updateQry = array(
+			'ap_active' => 0,
+			'ap_is_complete' => 1,
+			'ap_in_progress' => -1,
+		);
+
+		$this->db->where('ap_job_id', $this->input->post('ap_job_id'));
+		$this->db->update('appointment', $updateQry);
+		return true;
+	}
+
+	
 
 	public function new_job_insert()
 	{
