@@ -37,6 +37,10 @@
   width: auto;
 }
 
+.headerCustom{
+  display: flex;
+}
+
 
 
 </style>
@@ -56,7 +60,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Add Section</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Add Appointment</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -151,6 +155,118 @@
   </div>
 
 
+
+  <div class="modal fade" id="appointModal" tabindex="-1" role="dialog" aria-labelledby="appointModal"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Appointment Controller</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <form method="post" action="<?php echo base_url('appointment/updateAppointment'); ?>">
+            <div class="card-body">  
+              
+                        <div class="form-group">
+                         <button class="btn btn-success" value="" id="jobStartBtn"  type="button" onClick="startJob();">START JOB</button>
+                        </div>
+
+                        <div class="form-group">
+                         <button class="btn btn-warning" value="" id="jobEndBtn" type="button" onClick="finishJob();">FINISH JOB</button>
+                        </div>
+
+
+              <div class="form-group">
+                  <label>Select Customer</label>
+                <select id="ap_cust_id_editmode" name="ap_cust_id_editmode" class="form-control select2bs4"  style="width: 100%;">
+                  <option disabled >Select Customer</option>
+                  <?php
+                  $i = 1;                 
+                  foreach ($retrieveCustomers as $get_customers) { ?>
+                    <option value="<?php echo $get_customers->cust_id ; ?>">
+                      <?php echo $get_customers->cust_name; ?> -   <?php echo $get_customers->cus_no; ?>
+                    </option>
+                    <?php $i++;
+                  }
+                  ?>
+                </select>
+              </div>
+
+                <div class="form-group selectDate">
+                  <label >Appointment Date</label>
+               
+                    <input type="date" id="ap_date_editmode" class="form-control" value="<?php date("Y-m-d"); ?>" name="ap_date_editmode" placeholder="">
+                </div>
+
+               <div class="form-group">
+                  <label>Start Time</label>
+                  <select id="ap_start_time_editmode" name="ap_start_time_editmode"
+                      class="form-control select2bs4" style="width: 100%;" onchange="filterEndTime(this.value);">
+                      <?php 
+                      foreach($hoursRange as $hrData){
+                          ?>
+                        <option value="<?php echo $hrData; ?>"><?php echo $hrData; ?></option>
+                      <?php
+                      }                      
+                      ?>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>End Time</label>
+                  <select id="ap_end_time_editmode" name="ap_end_time_editmode"
+                      class="form-control select2bs4" style="width: 100%;">
+                      <?php 
+                      foreach($hoursRange as $hrData){
+                          ?>
+                        <option value="<?php echo $hrData; ?>"><?php echo $hrData; ?></option>
+                      <?php
+                      }                      
+                      ?>
+                  </select>
+                </div>
+
+
+               <div class="form-group">
+                  <label>Choose a Service with Users</label>
+                  <div class="select2-purple">
+                  <select id="serviceAndEmp_editmode" name="serviceAndEmp_editmode" class="form-control select2bs4" style="width: 100%;">                    
+                     <?php
+                    $i = 1;                    
+                    foreach ($usersWithServices as $urs) { ?>
+                        <option value="<?php echo $urs->user_id; ?>_<?php echo $urs->sr_id; ?>">
+                        <?php echo $urs->user_name; ?>
+                         - <?php echo $urs->sr_name; ?>
+                        </option>
+                        <?php $i++;
+                         }
+                       ?>                       
+                    </select>
+                  </div>
+                </div>
+
+
+              <div class="form-group">
+                <label for="exampleInputPassword1">Note</label>
+                <input type="text" class="form-control" id="ap_note_editmode" name="ap_note_editmode" placeholder="Enter ..">
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" id="delete_appointment" name="delete_appointment" class="btn btn-danger">Delete Appointment</button>
+          <button type="submit" id="update_appointment" name="update_appointment" class="btn btn-primary">Save changes</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
   <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -168,21 +284,36 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h2><?php echo $this->session->userdata("appointmentDateSelected"); ?></h2>
-              <div align="right">
-                
-                <div class="form-group selectDate">
-                  <label >Change View Date</label>
-                  <div class="col-sm-3">
-                    <input type="date" id="dateChange" class="form-control" value="<?php date("Y-m-d"); ?>" name="dateChange" placeholder="" onchange="changeDateOption()">
-                  </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                    <h2><?php echo $this->session->userdata("appointmentDateSelected"); ?></h2>
+
+                    <div class="form-group selectDate">
+                        <label >Change View Date</label>
+                        <div class="col-sm-6">
+                          <input type="date" id="dateChange" class="form-control" value="<?php date("Y-m-d"); ?>" name="dateChange" placeholder="" onchange="changeDateOption()">
+                        </div>
+                    </div>
                 </div>
 
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                  Book an Appointment
-                </button>
+                <div class="col-md-6" align="right">
+                         
+                    <div class="form-group selectDate">
+                      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" style="flex: 3;">
+                        Book an Appointment
+                      </button>
+                    </div>
 
-              </div>              
+                    <div class="form-group">
+                    <i class="fa fa-fw fa-circle"></i>   
+                      In Progress
+                    </div>
+
+                </div>
+              </div>            
+
+         
              
          </div>
 
@@ -277,11 +408,24 @@ function addApointment2(str) {
      console.log(88888, `${element.ap_user_id}_${element.ap_start_time}`);
 
      newButton = document.createElement('button');
+
+     startElementDiv = document.createElement('div');
+   
      newButton.setAttribute("id", `button_${element.ap_user_id}_${element.ap_start_time}_${element.ap_cust_id}`);
-     newButton.setAttribute("class", "btn btn-primary apointmentBtn");
+     newButton.setAttribute("class", "btn btn-primary apointmentBtn mainBtnAppointment");
+     newButton.setAttribute("value", `${element.ap_job_id}`);
      newButton.style.background = `${element.ap_color}`;
+
      newButton.innerHTML = `${element.cust_name} <br> Jb: ${element.ap_job_id} - Srv: ${element.sr_id} <br> ${element.ap_alocate_time}`;
+
+     newButton.setAttribute("data-toggle", "modal");
+     newButton.setAttribute("data-target", "#appointModal");
+     newButton.setAttribute("onClick", "changeAppointmentRequest(this)");
+
+
+  
      newButton.style["border-bottom"] =  `1px solid ${element.ap_color} !important`;
+
 
      startTimeElement.style.background= '#E5E4E2'; 
     //  startTimeElement.style["text-align"] = "left"; 
@@ -377,7 +521,94 @@ function filterEndTime(value)
 }
 
 
+function changeAppointmentRequest(props){
+     $.ajax({
+      type: "POST",
+      url: "<?php echo base_url(); ?>appointment/changeAppointmentRequestCall",
+      data: { appointmentId: props.value },
+      success: function(data){       
+          const res = JSON.parse(data);
+          const apCustIdBox = document.getElementById("ap_cust_id_editmode");
+          const apDateBox = document.getElementById("ap_date_editmode");
+          const apStartTimeBox = document.getElementById("ap_start_time_editmode");
+          const apEndTimeBox = document.getElementById("ap_end_time_editmode");
+          const apServiceEmpBox = document.getElementById("serviceAndEmp_editmode");
 
+          if(res.length > 0){
+          const appointmentData = res[0];
+            $("#ap_cust_id_editmode").find('option').each(function(){
+            if ($(this).val() == appointmentData.ap_cust_id){              
+              $(this).attr("selected","selected");
+              $(this).val(appointmentData.ap_cust_id).change();
+            }           
+            });
+            apCustIdBox.value = appointmentData.ap_cust_id;
+
+            apDateBox.value = appointmentData.ap_date;
+          
+            $("#ap_start_time_editmode").find('option').each(function(){
+            if ($(this).val() == appointmentData.ap_start_time){              
+              $(this).attr("selected","selected");
+              $(this).val(appointmentData.ap_start_time).change();
+            }           
+            });
+            apStartTimeBox.value = appointmentData.ap_start_time;
+
+            $("#ap_end_time_editmode").find('option').each(function(){
+            if ($(this).val() == appointmentData.ap_end_time){              
+              $(this).attr("selected","selected");
+              $(this).val(appointmentData.ap_end_time).change();
+            }           
+            });
+            apEndTimeBox.value = appointmentData.ap_end_time;
+
+            $("#serviceAndEmp_editmode").find('option').each(function(){
+            if ($(this).val() == `${appointmentData.ap_user_id}_${appointmentData.ap_sr_id}`){              
+              $(this).attr("selected","selected");
+              $(this).val(`${appointmentData.ap_user_id}_${appointmentData.ap_sr_id}`).change();
+            }           
+            });
+            apServiceEmpBox.value = `${appointmentData.ap_user_id}_${appointmentData.ap_sr_id}`;
+          
+            const jobStartBtn = document.getElementById("jobStartBtn");
+            const jobEndBtn = document.getElementById("jobEndBtn");
+            const updateAppointment = document.getElementById("update_appointment");
+            
+            jobStartBtn.value = appointmentData.ap_job_id;
+            jobEndBtn.value = appointmentData.ap_job_id;
+            updateAppointment.value = appointmentData.ap_job_id;
+          }
+
+          
+          }     
+  });
+}
+
+function startJob(){
+  const jobStartBtn = document.getElementById("jobStartBtn");
+  $.ajax({
+      type: "POST",
+      url: "<?php echo base_url(); ?>appointment/startJob",
+      data: { ap_job_id: jobStartBtn.value },
+      success: function(data){
+        window.location.reload();
+      }
+     
+  });
+}
+
+function finishJob(){
+  const jobEndBtn = document.getElementById("jobEndBtn");
+  $.ajax({
+      type: "POST",
+      url: "<?php echo base_url(); ?>appointment/finishJob",
+      data: { ap_job_id: jobEndBtn.value },
+      success: function(data){
+        window.location.reload();
+      }
+     
+  });
+}
 
 
 

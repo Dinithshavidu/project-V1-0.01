@@ -102,6 +102,38 @@ class Appointment extends CI_Controller
         //redirect('appointment/');
     }
 
+    public function changeAppointmentRequestCall(){
+        $this->load->model('appointments');
+        $resultData = $this->appointments->getAppointmentDataById();
+        echo json_encode($resultData);
+    }
+
+    public function startJob(){
+        if(!$this->input->post('ap_job_id')){
+            return false;
+        }       
+        $this->load->model('appointments');
+        $resultData = $this->appointments->startJob();
+        return $resultData;
+    }
+
+    public function finishJob(){
+        if(!$this->input->post('ap_job_id')){
+            return false;
+        }       
+        $this->load->model('appointments');
+        $resultData = $this->appointments->finishJob();
+        return $resultData;
+    }
+
+    public function updateAppointment(){
+        $this->load->model('appointments');
+        $updateAppointment = $this->appointments->updateAppointment();
+        if($updateAppointment){
+            redirect('appointment/');
+        }
+    }
+
     
   
 }
