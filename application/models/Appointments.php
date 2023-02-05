@@ -106,6 +106,53 @@ class Appointments extends CI_Model
 	public function new_appointment_insert()
 	{
 
+		$ap_customer_mobile = $this->input->post('ap_customer_mobile');
+		$ap_customer_name = $this->input->post('ap_customer_name');
+
+		$ap_cust_id = "";
+
+		// if customer selected
+		$ap_cust_id = $this->input->post('ap_cust_id');
+
+		// if customer is new to system - start code
+		if($ap_customer_mobile){
+			
+		$cust_name = "";
+		$cust_dob = "";
+		$cust_address = "";
+		$cus_no = "";
+		$cust_sex = "";
+		$cust_mail = "";
+		$cust_active = 1;
+		$cust_note = "";
+		$cust_cr_emp_id = "";
+		$cust_up_emp_id = "";
+		$cust_time = "";
+
+		$cust_name = $this->input->post('cust_name');
+		$cus_no = $this->input->post('cus_no');
+		
+		$insert_to_customer = array(
+
+			'cust_name' => $ap_customer_name,
+			'cust_dob' => $cust_dob,
+			'cust_address' => $cust_address,
+			'cus_no' => $ap_customer_mobile,
+			'cust_mail' => $cust_mail,
+			'cust_active' => $cust_active,
+			'cust_sex' => $cust_sex,
+			'cust_note' => $cust_note,
+			'cust_up_emp_id' => $cust_up_emp_id,
+			'cust_cr_emp_id' => $cust_cr_emp_id,
+			'cust_created_at' => $cust_time,
+			'cust_updated_at' => $cust_time,
+		);
+
+		$this->db->insert('customers', $insert_to_customer);
+		$ap_cust_id = $this->db->insert_id();
+		}
+		// if customer is new to system - end code
+
 		$ap_user_id = "";
 		$ap_sr_id = "";
 		$ap_service = $this->input->post('serviceAndEmp');
@@ -115,7 +162,7 @@ class Appointments extends CI_Model
 			$ap_sr_id = $splArr[1];
 		}
 		
-		$ap_cust_id = $this->input->post('ap_cust_id');
+		
 		
 		$ap_alocate_time = $this->input->post('ap_alocate_time');		
 		$ap_note = $this->input->post('ap_note');
