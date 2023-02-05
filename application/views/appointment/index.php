@@ -69,21 +69,51 @@
 
           <form method="post" action="<?php echo base_url('appointment/insertApointment'); ?>">
             <div class="card-body">             
-              <div class="form-group">
-                  <label>Select Customer</label>
-                <select id="ap_cust_id" name="ap_cust_id" class="form-control select2bs4"  style="width: 100%;">
-                  <option selected="selected" disabled >Select Customer</option>
-                  <?php
-                  $i = 1;                 
-                  foreach ($retrieveCustomers as $get_customers) { ?>
-                    <option value="<?php echo $get_customers->cust_id ; ?>">
-                      <?php echo $get_customers->cust_name; ?> -   <?php echo $get_customers->cus_no; ?>
-                    </option>
-                    <?php $i++;
-                  }
-                  ?>
-                </select>
+              
+            
+               <div id="ap_cust_id_section" onClick="hideNewCustomerDiv()">
+
+               <div class="form-group"> 
+                      <label>Select Customer</label>
+                      <select id="ap_cust_id" name="ap_cust_id" class="form-control select2bs4"  style="width: 100%;">
+                        <option selected="selected" disabled >Select Customer</option>
+                        <?php
+                        $i = 1;                 
+                        foreach ($retrieveCustomers as $get_customers) { ?>
+                          <option value="<?php echo $get_customers->cust_id ; ?>">
+                            <?php echo $get_customers->cust_name; ?> -   <?php echo $get_customers->cus_no; ?>
+                            <a class="btn btn-danger" href="/#" align="right"> View </a>
+                          </option>
+                          <?php $i++;
+                        }
+                        ?>
+                      </select>
               </div>
+
+              <p>If customer not registered choose this option</p>
+              
+               </div>
+
+               <div class="form-group">               
+                 <button class="btn btn-primary" value="" id="new_customer_button" type="button" onClick="viewNewCustomerDiv()">NEW CUSTOMER</button>
+                </div>                
+                
+
+
+                <div id="ap_new_customer_section" hidden> 
+
+                <div class="form-group">
+                  <label for="customerMobile">Customer Mobile</label>
+                  <input type="text" class="form-control" id="ap_customer_mobile" name="ap_customer_mobile" placeholder="Enter Mobile Number Here">
+                </div>
+
+                <div class="form-group">
+                  <label for="customerMobile">Customer Name</label>
+                  <input type="text" class="form-control" id="ap_customer_name" name="ap_customer_name" placeholder="Enter Customer Name Here">
+                </div>
+
+                </div>             
+
 
                 <div class="form-group selectDate">
                   <label >Appointment Date</label>
@@ -179,7 +209,7 @@
                          <button class="btn btn-warning" value="" id="jobEndBtn" type="button" onClick="finishJob();">FINISH JOB</button>
                         </div>
 
-
+                       
               <div class="form-group">
                   <label>Select Customer</label>
                 <select id="ap_cust_id_editmode" name="ap_cust_id_editmode" class="form-control select2bs4"  style="width: 100%;">
@@ -193,9 +223,10 @@
                     <?php $i++;
                   }
                   ?>
-                </select>
-              </div>
+                  </select>
+                </div>
 
+            
                 <div class="form-group selectDate">
                   <label >Appointment Date</label>
                
@@ -608,6 +639,17 @@ function finishJob(){
       }
      
   });
+}
+
+
+function viewNewCustomerDiv(){
+  document.getElementById("ap_new_customer_section").hidden = false;
+  document.getElementById("ap_cust_id_section").hidden = true;
+}
+
+
+function hideNewCustomerDiv(){
+  document.getElementById("ap_cust_id_section").hidden = false;
 }
 
 
