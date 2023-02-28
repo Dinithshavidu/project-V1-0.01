@@ -76,15 +76,17 @@
                     </table>
 
                 </div>
-                <div class="col-5 text-center">
+
+                <div class="col-5 text-center" style="padding-top: 60px;">
                     <?php if ($retive->cust_sex == 'male') { ?>
                         <img src="<?php echo base_url(); ?>dist/img/profile/male.png" alt="user-avatar"
-                            class="img-circle img-fluid">
+                            class="img-circle img-fluid" style="width: 50% !important;">
                     <?php } else { ?>
                         <img src="<?php echo base_url(); ?>dist/img/profile/female.png" alt="user-avatar"
-                            class="img-circle img-fluid">
+                            class="img-circle img-fluid" style="width: 50% !important;">
                     <?php } ?>
                 </div>
+
             </div>
         </div>
 
@@ -96,6 +98,88 @@
                 </a>
             </div>
         </div>
+
+       
+        <div class="card-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Appointment Service</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Duration</th>
+                    <th>Service by</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php $i = 1;
+
+                  foreach ($appointmentByCustomerId as $appointData) {
+
+
+                    ?>
+                    <tr>
+                      <td> <?php echo $i; ?></td>
+                      <td><?php echo $appointData->sr_name; ?></td>
+
+                      <td>
+                        <?php echo $appointData->ap_start_time; ?>
+                      </td>
+                      <td>
+                        <?php echo $appointData->ap_end_time; ?>
+                      </td>
+                      <td>
+                        <?php echo $appointData->ap_alocate_time; ?>
+                      </td>
+
+                      <td>
+                        <?php echo $appointData->user_name;  ?>
+                      </td>
+                      <td>
+                        <?php echo $appointData->ap_date;  ?>
+                      </td>
+                      <td>
+                        <?php 
+                        if($appointData->ap_active == "1"){
+                            ?>
+                            <button disabled class="btn btn-success">Open</button>
+                       <?php
+                        } else if($appointData->ap_active == "0")
+                        {
+                        ?>
+                            <button disabled class="btn btn-danger">Closed</button>
+                        <?php
+                        }
+                        ?>
+                      </td>
+                    </tr>
+
+                    <?php
+                    $i++;
+                  }
+                  ?>
+
+
+                </tbody>
+                
+                <tfoot>
+                  <tr>
+                     <th>#</th>
+                    <th>Appointment Service</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Duration</th>
+                    <th>Service by</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                  </tr>
+                </tfoot>
+              
+            </table>
+            </div>
 
     </div>
 </div>

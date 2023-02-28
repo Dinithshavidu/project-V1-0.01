@@ -37,12 +37,19 @@ class Customer extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function profile($page)
+    public function profile($custId)
     {
 
         $this->load->model('customers');
-        $data['retive'] = $this->customers->customerDetails($page);
-        $data['ds'] = $page;
+        $data['retive'] = $this->customers->customerDetails($custId);
+
+        $this->load->model('appointments');
+        $appointmentByCustomerId = $this->appointments->getAppointmentDataByCustomerId($custId);
+
+
+        $data['ds'] = $custId;
+        $data['appointmentByCustomerId'] = $appointmentByCustomerId;
+
         $this->load->view('customer/profile',$data);
     }
 
