@@ -26,6 +26,10 @@ class Appointment extends CI_Controller
         $this->load->model('appointments');
         $data['usersdata'] = $this->appointments->get_all_users_formatted();
         $data['usersWithServices'] = $this->appointments->getUserServiceRelation();
+
+        $data['servicesList'] = $this->appointments->getServicesList();
+        $data['usersList'] = $this->appointments->getUsersList();
+        
         $data['allApointments'] = $this->appointments->getAllApointments();
         $timeStartEnd = $this->appointments->getTimeStartEnd();
 

@@ -13,12 +13,30 @@ class Appointments extends CI_Model
 		return $query;
 	}
 
+	public function getServicesList()
+	{	
+		$query = $this->db->get("services")->result();
+		return $query;
+	}
+
+	public function getUsersList()
+	{
+		$selectArr = array(
+			'user_role !=' => "1",
+		);
+		// $query = $this->db->get_where('users', array($selectArr));
+
+		$this->db->select("*");
+		$this->db->where($selectArr);
+		$this->db->from('users');
+		$query = $this->db->get()->result();
+		return $query;
+	}
+
 	public function getAllApointments()
 	{
-
 		$selectArr = array(
 			'ap_date' => $this->session->userdata("appointmentDateSelected"),
-			'ap_active' => 1,
 		);
 
 		$this->db->select("*");
@@ -153,14 +171,14 @@ class Appointments extends CI_Model
 		}
 		// if customer is new to system - end code
 
-		$ap_user_id = "";
-		$ap_sr_id = "";
-		$ap_service = $this->input->post('serviceAndEmp');
-		$splArr = preg_split ("/\_/", $ap_service); 
-		if($splArr){
-			$ap_user_id = $splArr[0];
-			$ap_sr_id = $splArr[1];
-		}
+		$ap_user_id = $this->input->post('employerName');
+		$ap_sr_id = $this->input->post('serviceName');
+		// $ap_service = $this->input->post('serviceAndEmp');
+		// $splArr = preg_split ("/\_/", $ap_service); 
+		// if($splArr){
+		// 	$ap_user_id = $splArr[0];
+		// 	$ap_sr_id = $splArr[1];
+		// }
 		
 		
 		
@@ -168,7 +186,7 @@ class Appointments extends CI_Model
 		$ap_note = $this->input->post('ap_note');
 		$ap_emp_cr_id = $ap_user_id;
 		$ap_emp_up_id = $ap_user_id;
-		$ap_is_complete = $this->input->post('ap_is_complete');
+		// $ap_is_complete = $this->input->post('ap_is_complete');
 		$ap_user_id = $ap_user_id;
 
 		$ap_start_time = $this->input->post('ap_start_time');
@@ -202,32 +220,32 @@ class Appointments extends CI_Model
 	public function updateAppointment()
 	{
 
-		$ap_user_id = "";
-		$ap_sr_id = "";
-		$ap_service = $this->input->post('serviceAndEmp');
-		$splArr = preg_split ("/\_/", $ap_service); 
-		if($splArr){
-			$ap_user_id = $splArr[0];
-			$ap_sr_id = $splArr[1];
-		}
+		// $ap_service = $this->input->post('serviceAndEmp');
+		// $splArr = preg_split ("/\_/", $ap_service); 
+		// if($splArr){
+		// 	$ap_user_id = $splArr[0];
+		// 	$ap_sr_id = $splArr[1];
+		// }
+		$ap_user_id = $this->input->post('employerName_editmode');
+		$ap_sr_id = $this->input->post('serviceName_editmode');
 		
-		$ap_cust_id = $this->input->post('ap_cust_id');
+		$ap_cust_id = $this->input->post('ap_cust_id_editmode');
 		
-		$ap_alocate_time = $this->input->post('ap_alocate_time');		
-		$ap_note = $this->input->post('ap_note');
+		$ap_alocate_time = $this->input->post('ap_alocate_time_editmode');		
+		$ap_note = $this->input->post('ap_note_editmode');
 		$ap_emp_cr_id = $ap_user_id;
 		$ap_emp_up_id = $ap_user_id;
-		$ap_is_complete = $this->input->post('ap_is_complete');
+		// $ap_is_complete = $this->input->post('ap_is_complete');
 		$ap_user_id = $ap_user_id;
 
-		$ap_start_time = $this->input->post('ap_start_time');
-		$ap_end_time = $this->input->post('ap_end_time');
+		$ap_start_time = $this->input->post('ap_start_time_editmode');
+		$ap_end_time = $this->input->post('ap_end_time_editmode');
 
 		$ap_alocate_time = $this->getTimeGap($ap_start_time, $ap_end_time);
 
-		$apColor = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+		//$apColor = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
 
-		$ap_date = $this->input->post('ap_date');
+		$ap_date = $this->input->post('ap_date_editmode');
 
 		$update_appointment = array(
 			'ap_cust_id' => $ap_cust_id,
@@ -239,12 +257,12 @@ class Appointments extends CI_Model
 			'ap_start_time' => $ap_start_time,
 			'ap_end_time' => $ap_end_time,
 			'ap_alocate_time' => $ap_alocate_time,
-			'ap_color' => $apColor,
 			'ap_date' => $ap_date,
 		);
 
 		$this->db->where('ap_job_id', $this->input->post('update_appointment'));
 		$this->db->update('appointment', $update_appointment);
+
 		return true;
 
 	}
@@ -265,6 +283,7 @@ class Appointments extends CI_Model
 			'ap_active' => 0,
 			'ap_is_complete' => 1,
 			'ap_in_progress' => -1,
+			'ap_color' => "#C7C3D4"
 		);
 
 		$this->db->where('ap_job_id', $this->input->post('ap_job_id'));

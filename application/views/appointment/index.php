@@ -114,10 +114,8 @@
 
                 </div>             
 
-
                 <div class="form-group selectDate">
-                  <label >Appointment Date</label>
-               
+                  <label >Appointment Date</label>               
                     <input type="date" id="ap_date" class="form-control" value="<?php date("Y-m-d"); ?>" name="ap_date" placeholder="">
                 </div>
 
@@ -150,16 +148,56 @@
                 </div>
 
 
-               <div class="form-group">
+               <!-- <div class="form-group">
                   <label>Choose a Service with Users</label>
                   <div class="select2-purple">
                   <select id="serviceAndEmp" name="serviceAndEmp" class="form-control select2bs4" style="width: 100%;">                    
-                     <?php
+                     <
+                      ?php
                     $i = 1;                    
                     foreach ($usersWithServices as $urs) { ?>
-                        <option value="<?php echo $urs->user_id; ?>_<?php echo $urs->sr_id; ?>">
+                        <option value="<
+                          ?php echo $urs->user_id; ?>_<
+                            ?php echo $urs->sr_id; ?>">
+                        <
+                          ?php echo $urs->user_name; ?>
+                         - <
+                          ?php echo $urs->sr_name; ?>
+                        </option>
+                        <
+                          ?php $i++;
+                         }
+                       ?>                       
+                    </select>
+                  </div>
+                </div> -->
+
+                <div class="form-group">
+                  <label>Choose a Employer</label>
+                  <div class="select2-purple">
+                  <select id="employerName" name="employerName" class="form-control select2bs4" style="width: 100%;">                    
+                     <?php
+                    $i = 1;                    
+                    foreach ($usersList as $urs) { ?>
+                        <option value="<?php echo $urs->user_id; ?>">
                         <?php echo $urs->user_name; ?>
-                         - <?php echo $urs->sr_name; ?>
+                      </option>
+                        <?php $i++;
+                         }
+                       ?>                       
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Choose a Service</label>
+                  <div class="select2-purple">
+                  <select id="serviceName" name="serviceName" class="form-control select2bs4" style="width: 100%;">                    
+                     <?php
+                    $i = 1;                    
+                    foreach ($servicesList as $srv) { ?>
+                        <option value="<?php echo $srv->sr_id; ?>">
+                        <?php echo $srv->sr_name; ?>
                         </option>
                         <?php $i++;
                          }
@@ -191,7 +229,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Appointment Controller</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Appointment Edit Controller</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -262,16 +300,57 @@
                 </div>
 
 
-               <div class="form-group">
+               <!-- <div class="form-group">
                   <label>Choose a Service with Users</label>
                   <div class="select2-purple">
                   <select id="serviceAndEmp_editmode" name="serviceAndEmp_editmode" class="form-control select2bs4" style="width: 100%;">                    
-                     <?php
+                     <
+                      ?php
                     $i = 1;                    
                     foreach ($usersWithServices as $urs) { ?>
-                        <option value="<?php echo $urs->user_id; ?>_<?php echo $urs->sr_id; ?>">
+                        <option value="<
+                          ?php echo $urs->user_id; ?>_<
+                            ?php echo $urs->sr_id; ?>">
+                        <
+                          ?php echo $urs->user_name; ?>
+                         - <
+                          ?php echo $urs->sr_name; ?>
+                        </option>
+                        <
+                          ?php $i++;
+                         }
+                       ?>                       
+                    </select>
+                  </div>
+                </div>  -->
+
+
+                <div class="form-group">
+                  <label>Choose a Employer</label>
+                  <div class="select2-purple">
+                  <select id="employerName_editmode" name="employerName_editmode" class="form-control select2bs4" style="width: 100%;">                    
+                     <?php
+                    $i = 1;                    
+                    foreach ($usersList as $urs) { ?>
+                        <option value="<?php echo $urs->user_id; ?>">
                         <?php echo $urs->user_name; ?>
-                         - <?php echo $urs->sr_name; ?>
+                      </option>
+                        <?php $i++;
+                         }
+                       ?>                       
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Choose a Service</label>
+                  <div class="select2-purple">
+                  <select id="serviceName_editmode" name="serviceName_editmode" class="form-control select2bs4" style="width: 100%;">                    
+                     <?php
+                    $i = 1;                    
+                    foreach ($servicesList as $srv) { ?>
+                        <option value="<?php echo $srv->sr_id; ?>">
+                        <?php echo $srv->sr_name; ?>
                         </option>
                         <?php $i++;
                          }
@@ -289,7 +368,6 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" id="delete_appointment" name="delete_appointment" class="btn btn-danger">Delete Appointment</button>
           <button type="submit" id="update_appointment" name="update_appointment" class="btn btn-primary">Save changes</button>
         </div>
         </form>
@@ -449,11 +527,15 @@ function addApointment2(str) {
 
      newButton.innerHTML = `${element.cust_name} <br> Jb: ${element.ap_job_id} - Srv: ${element.sr_id} <br> ${element.ap_alocate_time}`;
 
-     newButton.setAttribute("data-toggle", "modal");
-     newButton.setAttribute("data-target", "#appointModal");
-     newButton.setAttribute("onClick", "changeAppointmentRequest(this)");
+    //  newButton.setAttribute("data-toggle", "modal");
+    //  newButton.setAttribute("data-target", "#appointModal");
+    //  newButton.setAttribute("onClick", "changeAppointmentRequest(this)");
 
-
+    if(element.ap_active == "1"){
+      newButton.setAttribute("onClick", "changeAppointmentRequest(this)");
+      newButton.setAttribute("data-toggle", "modal");
+      newButton.setAttribute("data-target", "#appointModal");
+    }
   
      newButton.style["border-bottom"] =  `1px solid ${element.ap_color} !important`;
 
@@ -563,7 +645,10 @@ function changeAppointmentRequest(props){
           const apDateBox = document.getElementById("ap_date_editmode");
           const apStartTimeBox = document.getElementById("ap_start_time_editmode");
           const apEndTimeBox = document.getElementById("ap_end_time_editmode");
-          const apServiceEmpBox = document.getElementById("serviceAndEmp_editmode");
+          // const apServiceEmpBox = document.getElementById("serviceAndEmp_editmode");
+
+          const employeNameBox = document.getElementById("employerName_editmode");
+          const serviceNameBox = document.getElementById("serviceName_editmode");
 
           if(res.length > 0){
           const appointmentData = res[0];
@@ -593,13 +678,31 @@ function changeAppointmentRequest(props){
             });
             apEndTimeBox.value = appointmentData.ap_end_time;
 
-            $("#serviceAndEmp_editmode").find('option').each(function(){
-            if ($(this).val() == `${appointmentData.ap_user_id}_${appointmentData.ap_sr_id}`){              
+            // $("#serviceAndEmp_editmode").find('option').each(function(){
+            // if ($(this).val() == `${appointmentData.ap_user_id}_${appointmentData.ap_sr_id}`){              
+            //   $(this).attr("selected","selected");
+            //   $(this).val(`${appointmentData.ap_user_id}_${appointmentData.ap_sr_id}`).change();
+            // }           
+            // });
+
+            $("#employerName_editmode").find('option').each(function(){
+            if ($(this).val() == `${appointmentData.ap_user_id}`){              
               $(this).attr("selected","selected");
-              $(this).val(`${appointmentData.ap_user_id}_${appointmentData.ap_sr_id}`).change();
+              $(this).val(`${appointmentData.ap_user_id}`).change();
             }           
             });
-            apServiceEmpBox.value = `${appointmentData.ap_user_id}_${appointmentData.ap_sr_id}`;
+
+            $("#serviceName_editmode").find('option').each(function(){
+            if ($(this).val() == `${appointmentData.ap_sr_id}`){              
+              $(this).attr("selected","selected");
+              $(this).val(`${appointmentData.ap_sr_id}`).change();
+            }           
+            });
+
+           // apServiceEmpBox.value = `${appointmentData.ap_user_id}_${appointmentData.ap_sr_id}`;
+
+            employeNameBox.value = `${appointmentData.ap_user_id}`;
+            serviceNameBox.value = `${appointmentData.ap_sr_id}`;
           
             const jobStartBtn = document.getElementById("jobStartBtn");
             const jobEndBtn = document.getElementById("jobEndBtn");
@@ -608,9 +711,9 @@ function changeAppointmentRequest(props){
             jobStartBtn.value = appointmentData.ap_job_id;
             jobEndBtn.value = appointmentData.ap_job_id;
             updateAppointment.value = appointmentData.ap_job_id;
+            console.log("BUTTON VALUE SETTLED >>> ");
+            console.log("gggggg >>> " , updateAppointment.value);
           }
-
-          
           }     
   });
 }
