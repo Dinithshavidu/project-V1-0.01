@@ -76,15 +76,17 @@
                     </table>
 
                 </div>
-                <div class="col-5 text-center">
+
+                <div class="col-5 text-center" style="padding-top: 60px;">
                     <?php if ($retive->cust_sex == 'male') { ?>
                         <img src="<?php echo base_url(); ?>dist/img/profile/male.png" alt="user-avatar"
-                            class="img-circle img-fluid">
+                            class="img-circle img-fluid" style="width: 50% !important;">
                     <?php } else { ?>
                         <img src="<?php echo base_url(); ?>dist/img/profile/female.png" alt="user-avatar"
-                            class="img-circle img-fluid">
+                            class="img-circle img-fluid" style="width: 50% !important;">
                     <?php } ?>
                 </div>
+
             </div>
         </div>
 

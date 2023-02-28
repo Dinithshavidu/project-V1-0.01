@@ -368,8 +368,17 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" id="update_appointment" name="update_appointment" class="btn btn-primary">Save changes</button>
-        </div>
+
+         
+             <button 
+             <?php
+              if($this->session->userdata('LOGGED_USER_ROLE_ID') != "1"){
+                echo "disabled";
+              }
+             ?>
+             type="submit" id="update_appointment" name="update_appointment" class="btn btn-primary">Save changes</button>
+          
+          </div>
         </form>
       </div>
     </div>
@@ -707,6 +716,10 @@ function changeAppointmentRequest(props){
             const jobStartBtn = document.getElementById("jobStartBtn");
             const jobEndBtn = document.getElementById("jobEndBtn");
             const updateAppointment = document.getElementById("update_appointment");
+
+            if(appointmentData.ap_in_progress){
+               jobEndBtn.hidden = true;
+            }
             
             jobStartBtn.value = appointmentData.ap_job_id;
             jobEndBtn.value = appointmentData.ap_job_id;
