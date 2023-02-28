@@ -63,6 +63,22 @@ class Appointments extends CI_Model
 		return $query;
 	}
 
+	public function getAppointmentDataByCustomerId($custId)
+	{
+		$selectArr = array(
+			'ap_cust_id' => $custId
+		);
+
+		$this->db->select("*");
+		$this->db->from('appointment');
+		$this->db->join('customers', 'customers.cust_id = appointment.ap_cust_id');
+		$this->db->join('users', 'users.user_id = appointment.ap_user_id');
+		$this->db->join('services', 'services.sr_id = appointment.ap_sr_id');
+		$this->db->where($selectArr);
+		$query = $this->db->get()->result();
+		return $query;
+	}
+
 	public function getTimeStartEnd()
 	{
 		$query = $this->db->get("time_slots")->result();
