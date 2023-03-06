@@ -718,7 +718,7 @@ function changeAppointmentRequest(props){
             const updateAppointment = document.getElementById("update_appointment");
 
             if(appointmentData.ap_in_progress){
-               jobEndBtn.hidden = true;
+              jobStartBtn.hidden = true;
             }
             
             jobStartBtn.value = appointmentData.ap_job_id;
